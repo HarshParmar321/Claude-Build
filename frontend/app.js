@@ -74,7 +74,7 @@ function renderZone(n) {
   z.classList.toggle("done", fs.length > 0);
   z.querySelector(".num").textContent = fs.length ? "✓" : n;
   z.querySelector(".files").innerHTML = fs.map((f, i) =>
-    `<div class="file"><span title="${esc(f.name)}">📎 ${esc(f.name)}</span><button aria-label="Remove ${esc(f.name)}" onclick="removeFile(${n},${i},event)">×</button></div>`).join("");
+    `<div class="file"><span title="${esc(f.name)}">${esc(f.name)}</span><button aria-label="Remove ${esc(f.name)}" onclick="removeFile(${n},${i},event)">×</button></div>`).join("");
   const filled = [1, 2, 3].filter(k => uploaded[k].length).length;
   $("#zoneCount").innerHTML = filled === 3 ? "<b>All set!</b> Ready to check" : `<b>${filled}</b> of 3 added`;
   $("#goBtn").disabled = filled < 3;
@@ -216,7 +216,7 @@ async function renderResult(caseId) {
   const valid = inv.verdict === "VALID_REJECTION";
   const amount = valid ? f.amount_claimed_inr : (inv.amount_at_stake_inr || f.amount_claimed_inr);
   const timeBadge = inv.replay ? '<span class="pill" style="margin-left:6px">Saved replay</span>'
-    : state.elapsed ? `<span class="pill" style="margin-left:6px;color:var(--accent);border-color:var(--accent)">⚡ Investigated in ${state.elapsed} s</span>` : "";
+    : state.elapsed ? `<span class="pill" style="margin-left:6px;color:var(--accent);border-color:var(--accent)">Investigated in ${state.elapsed} s</span>` : "";
 
   $("#verdictCard").className = "card verdict " + v.cls;
   $("#verdictCard").innerHTML = `
@@ -243,7 +243,7 @@ async function renderResult(caseId) {
       <h4>${esc(k.title)} ${ok ? "" : `<span class="tag fail">${esc(k.severity)}</span>`}</h4>
       <div>${esc(k.finding)}</div>
       ${k.policy_quote && !dup ? `<div class="quote">“${esc(k.policy_quote)}”</div>` : ""}
-      ${(cite || k.regulation) ? `<div class="cite">${cite ? `<span>📖 ${esc(cite)}${dup ? " (quoted above)" : ""}</span>` : ""}${k.regulation ? `<span>⚖️ ${esc(k.regulation)}</span>` : ""}</div>` : ""}
+      ${(cite || k.regulation) ? `<div class="cite">${cite ? `<span>${esc(cite)}${dup ? " (quoted above)" : ""}</span>` : ""}${k.regulation ? `<span>${esc(k.regulation)}</span>` : ""}</div>` : ""}
     </div>`;
   };
   const mini = k => { const [cls, sym, label] = statusBits(k.status); return `<div class="row"><span class="icon ${cls}" aria-hidden="true">${sym}</span><div><div class="rt">${esc(k.title)}<span class="tag ${cls}">${label}</span></div><div class="rf">${esc(k.finding)}</div></div></div>`; };
@@ -262,7 +262,7 @@ async function renderResult(caseId) {
     $("#actionArea").innerHTML = `<h3 class="section-t">Fight back in 3 steps</h3><p class="section-s">Most people never appeal. You're already ahead.</p>
       <div class="plan">
         <div class="card primary"><span class="pn">Step 1 · now</span><b>Get your appeal letter</b><p>We write it for you, citing the exact clauses and rules.</p>
-          <div class="btns"><button class="btn small" onclick="openLetter('en')">✍️ Draft letter</button><button class="btn small ghost" onclick="openLetter('hi')">हिंदी में</button><button class="btn small ghost" onclick="openLetter('mr')">मराठीत</button></div></div>
+          <div class="btns"><button class="btn small" onclick="openLetter('en')">Draft letter</button><button class="btn small ghost" onclick="openLetter('hi')">हिंदी में</button><button class="btn small ghost" onclick="openLetter('mr')">मराठीत</button></div></div>
         <div class="card"><span class="pn">Step 2 · today</span><b>Send it to the Grievance Officer</b><p>Email it to the insurer's Grievance Redressal Officer (the address is in your rejection letter or on their website). Attach the rejection letter and hospital papers. Keep a copy.</p></div>
         <div class="card"><span class="pn">Step 3 · if no reply</span><b>Escalate for free</b><p>No answer by ${esc(c.appeal_reply_due)}, or still rejected? Complain on IRDAI's Bima Bharosa portal, then the Insurance Ombudsman (free, claims up to ₹50 lakh).</p></div>
       </div>`;
