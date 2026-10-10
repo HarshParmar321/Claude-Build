@@ -7,11 +7,11 @@ const SAMPLES = [
   { id: "case03", chip: "BP emergency", amount: 131000, short: "Declared PED · rejected under '48-month' wait" },
   { id: "case04", chip: "Knee replacement", amount: 302000, short: "New policy · rejected under 24-month wait" },
 ];
-const STAGES = ["Reading documents", "Calculating dates", "Checking IRDAI rules", "Verdict"];
+const STAGES = ["Reading · Sonnet 5.5", "Date math · Python", "IRDAI check · Opus 5.5", "Verdict"];
 const THINKING = ["Reading the rejection reason…", "Finding the matching policy clauses…", "Checking the moratorium rule…",
   "Checking waiting periods…", "Checking the Day Care list…", "Checking sub-limits…", "Checking the insurer's procedure…"];
 
-const state = { caseId: null, facts: null, computed: null, inv: null, lang: "en", letters: {}, timers: [], es: null, busy: false };
+const state = { t0: 0, elapsed: null, caseId: null, facts: null, computed: null, inv: null, lang: "en", letters: {}, timers: [], es: null, busy: false };
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const inr = n => (n || n === 0) ? "₹" + Number(n).toLocaleString("en-IN") : "—";
@@ -84,7 +84,7 @@ function thinkingRow(text) {
   return `<div class="row" id="thinking"><span class="icon spin"></span><div><div class="rt">${text}</div><div class="rf" id="thinkMsg">Opus 5.5 is reading your policy against 9 IRDAI rules</div></div></div>`;
 }
 function runInvestigation(caseId) {
-  state.caseId = caseId; state.inv = null; state.letters = {};
+  state.caseId = caseId; state.inv = null; state.letters = {}; state.t0 = Date.now(); state.elapsed = null;
   show("investigate");
   $("#invTitle").textContent = "Investigating your claim";
   $("#toResult").style.display = "none";
@@ -127,7 +127,7 @@ function runInvestigation(caseId) {
   });
   on("notice", d => { $("#notice").textContent = d.message; $("#notice").style.display = "block"; });
   on("verdict", inv => {
-    state.inv = inv; setStage(4);
+    state.inv = inv; state.elapsed = Math.round((Date.now() - state.t0) / 1000); setStage(4);
     $("#toResult").style.display = "inline-flex";
     later(() => go("#/result/" + caseId), 1800);
   });
@@ -157,7 +157,7 @@ async function renderResult(caseId) {
   const valid = inv.verdict === "VALID_REJECTION";
   $("#verdictCard").innerHTML = `
     <div><span class="badge ${badge[0]}">${badge[1]}</span> <span class="muted" style="font-size:13px">Confidence: ${esc(inv.confidence)}</span>
-      ${inv.replay ? '<span class="pill" style="margin-left:6px">Saved replay</span>' : ""}
+      ${inv.replay ? '<span class="pill" style="margin-left:6px">Saved replay</span>' : (state.elapsed ? `<span class="pill" style="margin-left:6px;color:var(--accent);border-color:var(--accent)">⚡ Investigated in ${state.elapsed} s</span>` : "")}
       <h2>${esc(inv.headline)}</h2>
       <div class="muted">${esc(f.patient_name || "")}${f.claim_number ? " · Claim " + esc(f.claim_number) : ""} · ${fails.length ? fails.length + (fails.length > 1 ? " rule violations found" : " rule violation found") : "No rule violations found"}</div></div>
     <div class="stake"><div class="muted" style="font-size:13px">${valid ? "Amount claimed" : "Amount at stake"}</div><div class="amt">${inr(valid ? f.amount_claimed_inr : inv.amount_at_stake_inr || f.amount_claimed_inr)}</div></div>`;
@@ -228,6 +228,10 @@ async function setLang(lang, typed) {
 function copyLetter() {
   const t = state.letters[state.lang] || "";
   (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(() => toast("Letter copied"), () => toast("Select the text to copy"));
+}
+function shareWhatsApp() {
+  const t = state.letters[state.lang] || "";
+  window.open("https://wa.me/?text=" + encodeURIComponent(t), "_blank");
 }
 function downloadLetter() {
   const t = state.letters[state.lang] || "";

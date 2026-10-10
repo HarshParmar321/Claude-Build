@@ -35,7 +35,7 @@ Verdict:
 - STRONG_CASE: at least one critical rule failed, or the main rejection reason is clearly wrong under the policy.
 - CONTESTABLE: only procedural (major/minor) failures, or the evidence is mixed.
 - VALID_REJECTION: the main reason is correct under the policy and IRDAI rules. Say so honestly even if procedural points exist.
-headline: one short sentence, the main finding (e.g. "This rejection breaks the 5-year moratorium rule"). For VALID_REJECTION use "This rejection appears correct".
+headline: ONE short sentence, MAXIMUM 12 words, plain language, the main finding (e.g. "This rejection breaks the 5-year moratorium rule"). For VALID_REJECTION use "This rejection appears correct".
 amount_at_stake_inr: min(amount claimed, applicable sub-limit, sum insured).
 next_steps: 2-4 short practical steps. For VALID_REJECTION include when cover starts (e.g. the date the waiting period ends) and alternatives (employer cover, portability credit).
 Output English only."""
