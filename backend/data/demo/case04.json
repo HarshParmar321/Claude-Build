@@ -1,7 +1,7 @@
 {
- "note": "Saved replay used for ?demo=1 and as fail-safe. Regenerate with: python scripts/save_demo.py",
+ "note": "Real model output saved by scripts/eval_cases.py --save",
  "facts": {
-  "patient_name": "Anita Rohan Desai",
+  "patient_name": "Mrs. Anita Rohan Desai",
   "gender": "female",
   "policy_number": "SHS/26/2901288",
   "claim_number": "CLM/2026/MUM/094120",
@@ -9,26 +9,27 @@
   "hospital_name": "Aashray Multispeciality Hospital",
   "sum_insured_inr": 500000,
   "first_inception_date": "2026-03-01",
+  "current_period": "01-Mar-2026 to 28-Feb-2027",
   "peds_declared": [],
   "admission_datetime": "2026-09-18T07:00",
   "discharge_datetime": "2026-09-22T13:00",
-  "diagnosis": "Osteoarthritis, right total knee replacement",
-  "procedure": "Right Total Knee Replacement",
+  "diagnosis": "Primary Osteoarthritis Right Knee (Grade IV). Not related to accident.",
+  "procedure": "Right Total Knee Replacement (TKR) under spinal anaesthesia",
   "amount_claimed_inr": 302000,
   "rejection_date": "2026-10-02",
-  "rejection_reason": "Joint replacement in 24-month waiting period (Excl02)",
+  "rejection_reason": "The claim was rejected because the Right Total Knee Replacement for primary osteoarthritis (not due to an accident) falls under the 24-month specified disease/procedure waiting period from first policy inception on 01-Mar-2026, which is not yet completed.",
   "rejection_category": "specified_disease_waiting",
-  "clause_cited": "Clause 3.2 - Excl02",
+  "clause_cited": "Clause 3.2 — Excl02",
   "waiting_period_months_in_letter": 24,
   "letter_mentions_claims_review_committee": true,
   "letter_mentions_grievance_or_ombudsman": true,
   "fraud_alleged": false,
   "documents_found": [
    "policy wording",
-   "policy schedule",
+   "schedule",
    "rejection letter",
    "discharge summary",
-   "final bill"
+   "bill"
   ]
  },
  "investigation": {
@@ -39,64 +40,109 @@
   "checks": [
    {
     "rule_id": "R3",
-    "title": "Specified disease waiting (24 months)",
+    "title": "Specified disease waiting period",
     "status": "pass",
-    "finding": "Joint replacement has a 24-month wait. Policy is only 6 months old, so the insurer applied the rule correctly.",
-    "policy_quote": "Expenses related to the treatment of the listed conditions, surgeries or treatments shall be excluded until the expiry of 24 months of Continuous Coverage after the date of inception of the first policy. This exclusion shall not apply to claims arising due to an Accident.",
-    "policy_clause": "Excl02 (Clause 3.2)",
+    "finding": "Knee replacement for osteoarthritis that was not caused by an accident is on the policy's 24-month waiting list, and the policy had been held for only 6 months, so the waiting period was not over.",
+    "policy_quote": "Expenses related to the treatment of the listed conditions, surgeries or treatments shall be excluded until the expiry of 24 months of Continuous Coverage after the date of inception of the first policy.",
+    "policy_clause": "Clause 3.2 — Excl02",
     "page": 2,
     "regulation": "IRDAI (Insurance Products) Regulations, 2024",
-    "severity": "minor"
+    "severity": "critical"
    },
    {
     "rule_id": "R5",
     "title": "Claims Review Committee approval",
     "status": "pass",
-    "finding": "Letter confirms committee approval on 01-Oct-2026.",
-    "policy_quote": null,
-    "policy_clause": null,
-    "page": null,
-    "regulation": null,
-    "severity": "minor"
+    "finding": "The letter says the Claims Review Committee approved the rejection on 01-Oct-2026.",
+    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee).",
+    "policy_clause": "Clause 5.4",
+    "page": 3,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
    },
    {
     "rule_id": "R6",
     "title": "Specific clause cited",
     "status": "pass",
-    "finding": "Letter cites Clause 3.2, Excl02.",
-    "policy_quote": null,
-    "policy_clause": null,
-    "page": null,
-    "regulation": null,
-    "severity": "minor"
+    "finding": "The letter names the exact clause used to reject the claim: Clause 3.2 — Excl02, the 24-month waiting period.",
+    "policy_quote": "Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
+    "policy_clause": "Clause 5.4",
+    "page": 3,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
    },
    {
     "rule_id": "R7",
     "title": "Grievance & Ombudsman options shared",
     "status": "pass",
-    "finding": "Letter mentions the grievance officer and Ombudsman.",
-    "policy_quote": null,
-    "policy_clause": null,
-    "page": null,
-    "regulation": null,
+    "finding": "The letter names the Grievance Redressal Officer, the Bima Bharosa portal and the Insurance Ombudsman in Mumbai.",
+    "policy_quote": "Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
+    "policy_clause": "Clause 5.4",
+    "page": 3,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
     "severity": "minor"
    },
    {
-    "rule_id": "R3a",
-    "title": "Accident exception",
+    "rule_id": "R1",
+    "title": "Moratorium period (60 months)",
     "status": "not_applicable",
-    "finding": "Osteoarthritis, no accident, so the exception doesn't apply.",
+    "finding": "The claim was not rejected for non-disclosure, and the policy has been held for only 6 months, well short of 60.",
+    "policy_quote": "After completion of sixty (60) continuous months of coverage (including portability and migration), no policy and claim shall be contestable by the Company on grounds of non-disclosure, misrepresentation, except on grounds of established fraud.",
+    "policy_clause": "Clause 6.4",
+    "page": 3,
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
+   },
+   {
+    "rule_id": "R2",
+    "title": "Pre-existing disease waiting (max 36 months)",
+    "status": "not_applicable",
+    "finding": "The insurer did not reject the claim as a pre-existing disease; it used the 24-month specified-procedure waiting period instead.",
+    "policy_quote": "Expenses related to the treatment of a Pre-Existing Disease (PED) and its direct complications shall be excluded until the expiry of 36 months of Continuous Coverage after the date of inception of the first policy with the Company.",
+    "policy_clause": "Clause 3.1 — Excl01",
+    "page": 2,
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
+   },
+   {
+    "rule_id": "R4",
+    "title": "24-hour rule vs Day Care procedures",
+    "status": "not_applicable",
+    "finding": "The hospital stay was 102 hours (4 days 6 h), and the claim was not rejected for a short stay.",
     "policy_quote": null,
     "policy_clause": null,
     "page": null,
-    "regulation": null,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024; consumer forum rulings",
+    "severity": "critical"
+   },
+   {
+    "rule_id": "R8",
+    "title": "Documents collected by insurer",
+    "status": "not_applicable",
+    "finding": "The claim was not rejected for missing documents.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
+   },
+   {
+    "rule_id": "R9",
+    "title": "Sum insured & sub-limits",
+    "status": "not_applicable",
+    "finding": "Knee replacement has no sub-limit in this policy, so the amount at stake is the full bill of ₹3,02,000, which is within the ₹5,00,000 sum insured.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": "Policy terms",
     "severity": "minor"
    }
   ],
   "next_steps": [
-   "Keep renewing on time. The 24-month wait ends on 01-Mar-2028, after which joint replacement is covered.",
-   "Check whether an employer group policy or a spouse's family floater can pay for this surgery.",
-   "If you had earlier health cover with another insurer, ask about portability credit. It can shorten the waiting period."
+   "Accept that this claim is unlikely to succeed: knee replacement has a 24-month waiting period, and your policy was only 6 months old.",
+   "Keep renewing on time (within the 30-day grace period). The 24-month wait counts from 01-Mar-2026, so knee replacement cover should start after 28-Feb-2028. Your hospital notes mention 3 years of knee pain, so the insurer may argue the condition existed before the policy, which carries a 36-month wait. Plan for a possible wait until 01-Mar-2029.",
+   "For the other knee, or if surgery is needed sooner, check whether you or your spouse have employer group health cover, which often has no waiting period.",
+   "If you had any earlier health policy without a break in cover, ask the insurer in writing for portability credit, as this could shorten the waiting period."
   ]
  },
  "letters": {}

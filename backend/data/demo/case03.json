@@ -1,7 +1,7 @@
 {
- "note": "Saved replay used for ?demo=1 and as fail-safe. Regenerate with: python scripts/save_demo.py",
+ "note": "Real model output saved by scripts/eval_cases.py --save",
  "facts": {
-  "patient_name": "Vikram Shrikant Joshi",
+  "patient_name": "Mr. Vikram Shrikant Joshi",
   "gender": "male",
   "policy_number": "SHS/26/1840552",
   "claim_number": "CLM/2026/MUM/093377",
@@ -9,20 +9,21 @@
   "hospital_name": "Aashray Multispeciality Hospital",
   "sum_insured_inr": 1000000,
   "first_inception_date": "2022-11-10",
+  "current_period": "10-Nov-2025 to 09-Nov-2026",
   "peds_declared": [
-   "Hypertension"
+   "Hypertension since 2020"
   ],
   "admission_datetime": "2026-09-20T23:05",
   "discharge_datetime": "2026-09-24T11:30",
-  "diagnosis": "Hypertensive emergency with acute kidney injury",
-  "procedure": "ICU care, IV labetalol",
+  "diagnosis": "Hypertensive Emergency with Acute Kidney Injury",
+  "procedure": "ICU admission; IV labetalol infusion; controlled BP reduction; renal monitoring",
   "amount_claimed_inr": 131000,
   "rejection_date": "2026-10-03",
-  "rejection_reason": "PED waiting period of 48 months not complete (Excl01)",
+  "rejection_reason": "The insurer says the Hypertensive Emergency is a direct complication of declared pre-existing Hypertension and the 48-month PED waiting period from first inception on 10-Nov-2022 was not completed at admission.",
   "rejection_category": "ped_waiting",
   "clause_cited": "Excl01",
   "waiting_period_months_in_letter": 48,
-  "letter_mentions_claims_review_committee": true,
+  "letter_mentions_claims_review_committee": false,
   "letter_mentions_grievance_or_ombudsman": false,
   "fraud_alleged": false,
   "documents_found": [
@@ -30,91 +31,125 @@
    "policy schedule",
    "rejection letter",
    "discharge summary",
-   "final bill"
+   "final hospital bill"
   ]
  },
  "investigation": {
   "verdict": "STRONG_CASE",
   "confidence": "high",
-  "headline": "The insurer applied a 48-month wait; your policy says 36",
+  "headline": "The insurer applied a 48-month PED waiting period, but the policy says 36 months, and you had 46 months of cover",
   "amount_at_stake_inr": 131000,
   "checks": [
    {
     "rule_id": "R2",
-    "title": "Pre-existing disease waiting (36 months)",
+    "title": "Pre-existing disease waiting (max 36 months)",
     "status": "fail",
-    "finding": "Letter applies 48 months. The policy says 36 and IRDAI caps it at 36. Policy held 46 months, so the wait is over.",
+    "finding": "The policy's waiting period for pre-existing diseases is 36 months, not the 48 months in the letter. You had 46 months of continuous cover, and your hypertension was declared and accepted, so this exclusion no longer applies.",
     "policy_quote": "Expenses related to the treatment of a Pre-Existing Disease (PED) and its direct complications shall be excluded until the expiry of 36 months of Continuous Coverage after the date of inception of the first policy with the Company.",
-    "policy_clause": "Excl01 (Clause 3.1)",
+    "policy_clause": "Clause 3.1 Excl01 — Pre-Existing Diseases",
     "page": 2,
     "regulation": "IRDAI (Insurance Products) Regulations, 2024",
     "severity": "critical"
    },
    {
+    "rule_id": "R5",
+    "title": "Claims Review Committee approval",
+    "status": "fail",
+    "finding": "The letter is 'system-generated' and does not say the Claims Review Committee approved the rejection, which the policy requires for every repudiation.",
+    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee).",
+    "policy_clause": "Clause 5.4 Repudiation",
+    "page": 3,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
+   },
+   {
     "rule_id": "R7",
     "title": "Grievance & Ombudsman options shared",
     "status": "fail",
-    "finding": "The letter doesn't tell you how to complain or escalate.",
-    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee). Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
-    "policy_clause": "Clause 5.4",
+    "finding": "The letter does not mention the grievance officer, Bima Bharosa or the Ombudsman, although the policy says every repudiation letter must do so.",
+    "policy_quote": "Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
+    "policy_clause": "Clause 5.4 Repudiation",
     "page": 3,
     "regulation": "IRDAI Master Circular on Health Insurance, 2024",
-    "severity": "minor"
-   },
-   {
-    "rule_id": "R5",
-    "title": "Claims Review Committee approval",
-    "status": "pass",
-    "finding": "Letter is from the claims team with committee review.",
-    "policy_quote": null,
-    "policy_clause": null,
-    "page": null,
-    "regulation": null,
     "severity": "minor"
    },
    {
     "rule_id": "R6",
     "title": "Specific clause cited",
     "status": "pass",
-    "finding": "Letter cites Excl01, but quotes the wrong period.",
+    "finding": "The letter names a specific clause (Excl01), even though it misstates that clause's waiting period as 48 months.",
+    "policy_quote": "Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
+    "policy_clause": "Clause 5.4 Repudiation",
+    "page": 3,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
+   },
+   {
+    "rule_id": "R1",
+    "title": "Moratorium period (60 months)",
+    "status": "not_applicable",
+    "finding": "The rejection is not for non-disclosure; hypertension was declared, and cover is 46 months, below the 60-month moratorium.",
     "policy_quote": null,
     "policy_clause": null,
     "page": null,
-    "regulation": null,
-    "severity": "minor"
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
+   },
+   {
+    "rule_id": "R3",
+    "title": "Specified disease waiting period",
+    "status": "not_applicable",
+    "finding": "Hypertensive emergency is not on the 24-month specified-disease list, and the insurer did not rely on Excl02.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
+   },
+   {
+    "rule_id": "R4",
+    "title": "24-hour rule vs Day Care procedures",
+    "status": "not_applicable",
+    "finding": "The stay lasted about 84 hours (3 days 12 h), and the claim was not rejected for a short stay.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024; consumer forum rulings",
+    "severity": "critical"
+   },
+   {
+    "rule_id": "R8",
+    "title": "Documents collected by insurer",
+    "status": "not_applicable",
+    "finding": "The claim was not rejected for missing documents.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
    },
    {
     "rule_id": "R9",
     "title": "Sum insured & sub-limits",
-    "status": "pass",
-    "finding": "₹1,31,000 is within the ₹10,00,000 sum insured.",
-    "policy_quote": null,
-    "policy_clause": null,
-    "page": null,
-    "regulation": null,
-    "severity": "minor"
-   },
-   {
-    "rule_id": "R1",
-    "title": "Non-disclosure",
     "status": "not_applicable",
-    "finding": "Hypertension was declared and accepted at proposal.",
+    "finding": "No sub-limit applies to this treatment, so the full ₹1,31,000 bill is within the ₹10,00,000 sum insured.",
     "policy_quote": null,
     "policy_clause": null,
     "page": null,
-    "regulation": null,
+    "regulation": "Policy terms",
     "severity": "minor"
    }
   ],
   "next_steps": [
-   "Send the appeal letter to the insurer's Grievance Redressal Officer today.",
-   "If there is no satisfactory reply within 30 days, file a complaint on IRDAI's Bima Bharosa portal.",
-   "Then approach the Insurance Ombudsman: free, for claims up to ₹50 lakh, within one year of the insurer's final reply."
+   "Email the Grievance Redressal Officer (grievance@samvad-health.example). Point out that Excl01 (Clause 3.1, page 2) sets a 36-month PED waiting period, not 48, and that you had 46 months of continuous cover with hypertension declared and accepted. Ask them to pay ₹1,31,000.",
+   "In the same email, ask for proof that the Claims Review Committee approved the rejection (Clause 5.4). Also claim interest at 2% above the bank rate for late settlement (Clause 5.3).",
+   "If you get no satisfactory reply by 09 Nov 2026, register a complaint on Bima Bharosa (bimabharosa.irdai.gov.in).",
+   "If the complaint is still unresolved, file a free complaint with the Insurance Ombudsman, Mumbai, via cioins.co.in before 09 Nov 2027."
   ]
  },
  "letters": {
-  "en": "To,\nThe Grievance Redressal Officer,\nSamvad Health Insurance Co. Ltd.\n\nSubject: Request to review the repudiation of Claim No. CLM/2026/MUM/093377 under Policy No. SHS/26/1840552\n\nDear Sir / Madam,\n\nI refer to your letter dated 03-Oct-2026 rejecting my claim of ₹1,31,000 for treatment at Aashray Multispeciality Hospital, Andheri (West), Mumbai from 20-Sep-2026 to 24-Sep-2026. I request you to review this decision for the following reasons:\n\n1. Your letter applies a 48-month waiting period for pre-existing disease. Excl01 of my policy states 36 months, and the IRDAI (Insurance Products) Regulations, 2024 cap this waiting period at 36 months.\n\n2. My policy has been in force continuously since 10-Nov-2022, i.e. 46 months before my admission on 20-Sep-2026. The 36-month waiting period was therefore complete.\n\n3. My hypertension was declared in the proposal form and accepted by you, so there is no question of non-disclosure.\n\nI therefore request you to settle the claim in full, with interest for delay as applicable under the policy and IRDAI regulations. If I do not receive a satisfactory reply within 30 days, I will approach IRDAI's Bima Bharosa portal and the Insurance Ombudsman.\n\nYours faithfully,\nVikram Shrikant Joshi\nPolicy No.: SHS/26/1840552\nClaim No.: CLM/2026/MUM/093377",
-  "hi": "सेवा में,\nशिकायत निवारण अधिकारी,\nSamvad Health Insurance Co. Ltd.\n\nविषय: पॉलिसी संख्या SHS/26/1840552 के अंतर्गत दावा संख्या CLM/2026/MUM/093377 की अस्वीकृति की समीक्षा हेतु अनुरोध\n\nमहोदय/महोदया,\n\nआपके दिनांक 03-Oct-2026 के पत्र के संदर्भ में, जिसमें Aashray Multispeciality Hospital, Andheri (West), Mumbai में 20-Sep-2026 से 24-Sep-2026 तक हुए उपचार के लिए मेरा ₹1,31,000 का दावा अस्वीकार किया गया है, मैं निम्नलिखित कारणों से इस निर्णय की समीक्षा का अनुरोध करता हूँ:\n\n1. आपके पत्र में पूर्व-मौजूदा बीमारी के लिए 48 महीने की प्रतीक्षा अवधि लागू की गई है। मेरी पॉलिसी के Excl01 में यह अवधि 36 महीने है, और IRDAI (बीमा उत्पाद) विनियम, 2024 के अनुसार यह अधिकतम 36 महीने हो सकती है।\n\n2. मेरी पॉलिसी 10-11-2022 से लगातार प्रभावी है, यानी 20-09-2026 को भर्ती होने तक 46 महीने। इसलिए 36 महीने की प्रतीक्षा अवधि पूरी हो चुकी थी।\n\n3. मेरा उच्च रक्तचाप प्रस्ताव फ़ॉर्म में घोषित किया गया था और आपने उसे स्वीकार किया था, इसलिए जानकारी छिपाने का कोई प्रश्न नहीं है।\n\nअतः मेरा अनुरोध है कि पॉलिसी तथा IRDAI नियमों के अनुसार लागू विलंब ब्याज सहित मेरे दावे का पूर्ण भुगतान किया जाए। यदि 30 दिनों के भीतर मुझे संतोषजनक उत्तर नहीं मिलता है, तो मैं IRDAI के बीमा भरोसा पोर्टल तथा बीमा लोकपाल से संपर्क करूँगा।\n\nभवदीय,\nVikram Shrikant Joshi\nपॉलिसी संख्या: SHS/26/1840552\nदावा संख्या: CLM/2026/MUM/093377",
-  "mr": "प्रति,\nतक्रार निवारण अधिकारी,\nSamvad Health Insurance Co. Ltd.\n\nविषय: पॉलिसी क्रमांक SHS/26/1840552 अंतर्गत दावा क्रमांक CLM/2026/MUM/093377 नाकारल्याच्या निर्णयाचा पुनर्विचार करण्याबाबत विनंती\n\nमहोदय/महोदया,\n\nआपल्या दिनांक 03-Oct-2026 च्या पत्राच्या संदर्भात, ज्याद्वारे Aashray Multispeciality Hospital, Andheri (West), Mumbai येथे 20-Sep-2026 ते 24-Sep-2026 या कालावधीत झालेल्या उपचारांसाठीचा माझा ₹1,31,000 चा दावा नाकारण्यात आला आहे, खालील कारणांसाठी या निर्णयाचा पुनर्विचार करावा अशी मी विनंती करतो:\n\n1. आपल्या पत्रात पूर्व-अस्तित्वातील आजारासाठी 48 महिन्यांचा प्रतीक्षा कालावधी लागू केला आहे. माझ्या पॉलिसीच्या Excl01 मध्ये हा कालावधी 36 महिने आहे, आणि IRDAI (विमा उत्पादने) नियमावली, 2024 नुसार तो जास्तीत जास्त 36 महिने असू शकतो.\n\n2. माझी पॉलिसी 10-11-2022 पासून सलग सुरू आहे, म्हणजेच 20-09-2026 रोजी दाखल होईपर्यंत 46 महिने. त्यामुळे 36 महिन्यांचा प्रतीक्षा कालावधी पूर्ण झाला होता.\n\n3. माझा उच्च रक्तदाब प्रस्ताव अर्जात जाहीर केला होता आणि आपण तो स्वीकारला होता, त्यामुळे माहिती लपवण्याचा प्रश्नच येत नाही.\n\nम्हणून, पॉलिसी व IRDAI नियमांनुसार लागू विलंब व्याजासह माझा दावा पूर्णपणे मंजूर करावा, ही विनंती. 30 दिवसांत समाधानकारक उत्तर न मिळाल्यास मी IRDAI च्या बीमा भरोसा पोर्टलकडे व विमा लोकपालांकडे दाद मागेन.\n\nआपला विश्वासू,\nVikram Shrikant Joshi\nपॉलिसी क्रमांक: SHS/26/1840552\nदावा क्रमांक: CLM/2026/MUM/093377"
+  "en": "To,\nThe Grievance Redressal Officer,\nSamvad Health Insurance Co. Ltd.\n\nSubject: Request to review the repudiation of Claim No. CLM/2026/MUM/093377 under Policy No. SHS/26/1840552\n\nDear Sir / Madam,\n\nI refer to your letter dated 3 October 2026, by which you repudiated my claim of Rs. 1,31,000 for my hospitalisation at Aashray Multispeciality Hospital. I was admitted on 20 September 2026 and discharged on 24 September 2026 with a diagnosis of Hypertensive Emergency with Acute Kidney Injury. You declined the claim under Clause Excl01, stating that the condition is a complication of my declared pre-existing Hypertension and that a 48-month waiting period from first inception on 10 November 2022 had not been completed. I request you to review this decision for the reasons below.\n\n1. The waiting period applied in your letter is not the one in my policy. Clause 3.1 (Excl01 - Pre-Existing Diseases, page 2 of the policy wording) excludes expenses for a Pre-Existing Disease and its direct complications only \"until the expiry of 36 months of Continuous Coverage after the date of inception of the first policy with the Company.\" It does not say 48 months. My first policy with your Company began on 10 November 2022, and I have been continuously covered since then. The 36-month period therefore expired in November 2025. On the date of admission, 20 September 2026, I had completed 46 months of continuous cover. My Hypertension was declared and accepted by you at inception, so even if the condition is treated as a direct complication of it, Excl01 no longer applies. The repudiation is also inconsistent with the IRDAI (Insurance Products) Regulations, 2024, which limit the waiting period for pre-existing diseases.\n\n2. Your letter does not show that the Claims Review Committee approved the repudiation. Clause 5.4 (Repudiation, page 3) states that \"No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee).\" Your letter is system-generated and makes no mention of any such approval. The IRDAI Master Circular on Health Insurance, 2024 requires insurers to follow the repudiation procedure laid down in the policy. If the Committee did review my claim, please send me a copy of its decision and the reasons recorded.\n\n3. Your letter does not inform me of my grievance and Ombudsman options. Clause 5.4 requires that every repudiation letter state the specific clause relied upon and \"inform the Insured Person of the grievance redressal and Ombudsman options.\" Your letter of 3 October 2026 makes no mention of the Grievance Redressal Officer, the IRDAI Bima Bharosa portal or the Insurance Ombudsman. This is contrary to the policy and to the IRDAI Master Circular on Health Insurance, 2024.\n\nIn view of the above, I request you to withdraw the repudiation and settle my claim of Rs. 1,31,000 in full, together with interest for the delay as provided in the policy and the IRDAI regulations. If I do not receive a satisfactory reply within 30 days of this letter, I will be compelled to approach the IRDAI Bima Bharosa portal and the Insurance Ombudsman for redress.\n\nYours faithfully,\nMr. Vikram Shrikant Joshi\nPolicy No.: SHS/26/1840552\nClaim No.: CLM/2026/MUM/093377",
+  "hi": "सेवा में,\nशिकायत निवारण अधिकारी,\nसंवाद हेल्थ इंश्योरेंस कंपनी लिमिटेड।\n\nविषय: पॉलिसी संख्या SHS/26/1840552 के अंतर्गत दावा संख्या CLM/2026/MUM/093377 के अस्वीकृत किए जाने की समीक्षा हेतु अनुरोध\n\nमहोदय / महोदया,\n\nमैं आपके दिनांक 3 अक्टूबर 2026 के पत्र का संदर्भ ग्रहण करता हूँ, जिसके द्वारा आपने आश्रय मल्टीस्पेशलिटी हॉस्पिटल में मेरे अस्पताल में भर्ती होने से संबंधित ₹1,31,000 के मेरे दावे को अस्वीकृत कर दिया। मुझे 20 सितंबर 2026 को भर्ती किया गया था और 24 सितंबर 2026 को हाइपरटेंसिव इमरजेंसी विद एक्यूट किडनी इंजरी (Hypertensive Emergency with Acute Kidney Injury) के निदान के साथ छुट्टी दी गई थी। आपने यह दावा खंड Excl01 के अंतर्गत अस्वीकृत किया, यह कहते हुए कि यह स्थिति मेरे घोषित पूर्व-विद्यमान उच्च रक्तचाप की जटिलता है तथा 10 नवंबर 2022 को पहली बार पॉलिसी आरंभ होने की तिथि से 48 माह की प्रतीक्षा अवधि पूरी नहीं हुई थी। मैं आपसे अनुरोध करता हूँ कि निम्नलिखित कारणों से इस निर्णय की समीक्षा करें।\n\n1. आपके पत्र में लागू की गई प्रतीक्षा अवधि वह नहीं है जो मेरी पॉलिसी में दी गई है। खंड 3.1 (Excl01 - पूर्व-विद्यमान रोग, पॉलिसी शब्दावली का पृष्ठ 2) पूर्व-विद्यमान रोग और उसकी प्रत्यक्ष जटिलताओं के व्यय को केवल \"कंपनी के साथ पहली पॉलिसी के आरंभ होने की तिथि के बाद निरंतर कवरेज के 36 माह समाप्त होने तक\" ही अपवर्जित करता है। इसमें 48 माह का उल्लेख नहीं है। कंपनी के साथ मेरी पहली पॉलिसी 10 नवंबर 2022 को आरंभ हुई थी और तब से मैं निरंतर कवर के अंतर्गत हूँ। अतः 36 माह की अवधि नवंबर 2025 में समाप्त हो चुकी थी। भर्ती की तिथि, 20 सितंबर 2026, तक मैं 46 माह का निरंतर कवर पूरा कर चुका था। मेरा उच्च रक्तचाप पॉलिसी आरंभ के समय घोषित किया गया था और आपके द्वारा स्वीकार किया गया था, इसलिए यदि इस स्थिति को उसकी प्रत्यक्ष जटिलता भी माना जाए, तब भी Excl01 अब लागू नहीं होता। यह अस्वीकृति IRDAI (Insurance Products) Regulations, 2024 के भी अनुरूप नहीं है, जो पूर्व-विद्यमान रोगों के लिए प्रतीक्षा अवधि को सीमित करते हैं।\n\n2. आपके पत्र से यह प्रमाणित नहीं होता कि दावा अस्वीकृत करने को क्लेम्स रिव्यू कमेटी ने अनुमोदित किया था। खंड 5.4 (अस्वीकृति, पृष्ठ 3) में कहा गया है कि \"कंपनी की क्लेम्स रिव्यू कमेटी (तीन सदस्यीय समिति) के अनुमोदन के बिना कोई भी दावा पूर्णतः या आंशिक रूप से अस्वीकृत नहीं किया जाएगा।\" आपका पत्र सिस्टम-जनित है और उसमें ऐसे किसी अनुमोदन का उल्लेख नहीं है। IRDAI मास्टर सर्कुलर ऑन हेल्थ इंश्योरेंस, 2024 बीमाकर्ताओं से अपेक्षा करता है कि वे पॉलिसी में निर्धारित अस्वीकृति प्रक्रिया का पालन करें। यदि समिति ने वास्तव में मेरे दावे की समीक्षा की थी, तो कृपया उसके निर्णय की प्रति तथा दर्ज किए गए कारण मुझे भेजें।\n\n3. आपके पत्र में मुझे मेरे शिकायत और लोकपाल संबंधी विकल्पों की जानकारी नहीं दी गई है। खंड 5.4 के अनुसार प्रत्येक अस्वीकृति पत्र में आधार बनाए गए विशिष्ट खंड का उल्लेख होना चाहिए और उसमें \"बीमित व्यक्ति को शिकायत निवारण तथा लोकपाल के विकल्पों की जानकारी\" दी जानी चाहिए। आपके दिनांक 3 अक्टूबर 2026 के पत्र में शिकायत निवारण अधिकारी, IRDAI Bima Bharosa पोर्टल या बीमा लोकपाल का कोई उल्लेख नहीं है। यह पॉलिसी तथा IRDAI मास्टर सर्कुलर ऑन हेल्थ इंश्योरेंस, 2024 दोनों के विपरीत है।\n\nउपर्युक्त को देखते हुए, मेरा अनुरोध है कि आप इस अस्वीकृति को वापस लें और मेरे ₹1,31,000 के दावे का पूर्ण निपटान करें, साथ ही पॉलिसी तथा IRDAI के विनियमों में दिए गए प्रावधानों के अनुसार विलंब के लिए ब्याज का भी भुगतान करें। यदि इस पत्र की तिथि से 30 दिनों के भीतर मुझे संतोषजनक उत्तर प्राप्त नहीं होता, तो मुझे निवारण के लिए IRDAI Bima Bharosa पोर्टल तथा बीमा लोकपाल से संपर्क करने के लिए बाध्य होना पड़ेगा।\n\nभवदीय,\nश्री विक्रम श्रीकांत जोशी\nपॉलिसी संख्या: SHS/26/1840552\nदावा संख्या: CLM/2026/MUM/093377",
+  "mr": "प्रति,\nतक्रार निवारण अधिकारी,\nसंवाद हेल्थ इन्शुरन्स कं. लि.\n\nविषय: पॉलिसी क्र. SHS/26/1840552 अंतर्गत दावा क्र. CLM/2026/MUM/093377 नाकारण्याच्या निर्णयाचा पुनर्विचार करण्याची विनंती\n\nमहोदय / महोदया,\n\nमी आपल्या 3 ऑक्टोबर 2026 रोजीच्या पत्राचा संदर्भ घेत आहे. या पत्राद्वारे आपण आश्रय मल्टीस्पेशालिटी हॉस्पिटलमधील माझ्या रुग्णालयातील उपचारांसाठीचा Rs. 1,31,000 चा माझा दावा नाकारला आहे. मी 20 सप्टेंबर 2026 रोजी रुग्णालयात दाखल झालो आणि 24 सप्टेंबर 2026 रोजी मला डिस्चार्ज देण्यात आला. निदान तीव्र मूत्रपिंड इजेसह हायपरटेन्सिव्ह इमर्जन्सी (Hypertensive Emergency with Acute Kidney Injury) असे होते. आपण हा दावा Clause Excl01 अंतर्गत नाकारला. हा आजार मी घोषित केलेल्या पूर्वीपासूनच्या उच्च रक्तदाबाची गुंतागुंत आहे आणि 10 नोव्हेंबर 2022 रोजीच्या पहिल्या प्रारंभापासूनचा 48 महिन्यांचा प्रतीक्षा कालावधी पूर्ण झालेला नाही, असे आपण नमूद केले आहे. खालील कारणांमुळे या निर्णयाचा पुनर्विचार करावा, अशी मी आपल्याला विनंती करतो.\n\n1. आपल्या पत्रात लागू केलेला प्रतीक्षा कालावधी माझ्या पॉलिसीतील कालावधी नाही. Clause 3.1 (Excl01 - पूर्वीपासून अस्तित्वात असलेले आजार, पॉलिसी शब्दावलीतील पृष्ठ 2) नुसार, पूर्वीपासून अस्तित्वात असलेला आजार आणि त्याची थेट गुंतागुंत यांवरील खर्च केवळ \"कंपनीसोबतची पहिली पॉलिसी सुरू झाल्याच्या तारखेनंतर 36 महिन्यांचे अखंड संरक्षण पूर्ण होईपर्यंत\" वगळला जातो. त्यात 48 महिन्यांचा उल्लेख नाही. आपल्या कंपनीसोबतची माझी पहिली पॉलिसी 10 नोव्हेंबर 2022 रोजी सुरू झाली आणि तेव्हापासून मी अखंड संरक्षणाखाली आहे. त्यामुळे 36 महिन्यांचा कालावधी नोव्हेंबर 2025 मध्ये संपला. दाखल होण्याच्या दिनांकास, म्हणजे 20 सप्टेंबर 2026 रोजी, माझे 46 महिन्यांचे अखंड संरक्षण पूर्ण झाले होते. माझा उच्च रक्तदाब पॉलिसी सुरू होताना घोषित करण्यात आला होता आणि आपण तो स्वीकारला होता. त्यामुळे हा आजार त्याची थेट गुंतागुंत मानला तरी Excl01 आता लागू होत नाही. पूर्वीपासून अस्तित्वात असलेल्या आजारांसाठीचा प्रतीक्षा कालावधी मर्यादित करणाऱ्या IRDAI (इन्शुरन्स प्रॉडक्ट्स) विनियम, 2024 शीही हा दावा नाकारणे विसंगत आहे.\n\n2. दावा नाकारण्यास दावा पुनर्विलोकन समितीने मान्यता दिली असल्याचे आपल्या पत्रावरून दिसत नाही. Clause 5.4 (दावा नाकारणे, पृष्ठ 3) मध्ये असे नमूद आहे की, \"कंपनीच्या दावा पुनर्विलोकन समितीच्या (तीन सदस्यीय समिती) मान्यतेशिवाय कोणताही दावा पूर्णतः किंवा अंशतः नाकारला जाणार नाही.\" आपले पत्र संगणकाद्वारे तयार केलेले आहे आणि त्यात अशा कोणत्याही मान्यतेचा उल्लेख नाही. आरोग्य विम्यावरील IRDAI मास्टर परिपत्रक, 2024 नुसार विमा कंपन्यांनी पॉलिसीमध्ये नमूद केलेल्या दावा नाकारण्याच्या कार्यपद्धतीचे पालन करणे आवश्यक आहे. समितीने माझ्या दाव्याचे पुनर्विलोकन केले असल्यास, कृपया तिच्या निर्णयाची प्रत आणि नोंदवलेली कारणे मला पाठवावीत.\n\n3. आपले पत्र मला माझ्या तक्रार निवारण आणि लोकपाल यांच्याकडील पर्यायांची माहिती देत नाही. Clause 5.4 नुसार दावा नाकारणाऱ्या प्रत्येक पत्रात ज्या विशिष्ट कलमाचा आधार घेतला आहे ते नमूद करणे आणि \"विमाधारक व्यक्तीला तक्रार निवारण व लोकपाल यांच्याकडील पर्यायांची माहिती देणे\" आवश्यक आहे. आपल्या 3 ऑक्टोबर 2026 च्या पत्रात तक्रार निवारण अधिकारी, IRDAI Bima Bharosa पोर्टल किंवा विमा लोकपाल यांचा कोणताही उल्लेख नाही. हे पॉलिसीच्या तसेच आरोग्य विम्यावरील IRDAI मास्टर परिपत्रक, 2024 च्या विरोधात आहे.\n\nवरील बाबी लक्षात घेता, मी आपल्याला विनंती करतो की दावा नाकारण्याचा निर्णय मागे घ्यावा आणि माझा Rs. 1,31,000 चा दावा पूर्ण रकमेसह, तसेच पॉलिसी आणि IRDAI च्या विनियमांनुसार विलंबाबद्दलच्या व्याजासह, निकाली काढावा. या पत्राच्या दिनांकापासून 30 दिवसांच्या आत समाधानकारक उत्तर न मिळाल्यास, निवारणासाठी मला IRDAI Bima Bharosa पोर्टल आणि विमा लोकपाल यांच्याकडे जावे लागेल.\n\nआपला विश्वासू,\nश्री. विक्रम श्रीकांत जोशी\nपॉलिसी क्र.: SHS/26/1840552\nदावा क्र.: CLM/2026/MUM/093377"
  }
 }

@@ -1,5 +1,5 @@
 {
- "note": "Saved replay used for ?demo=1 and as fail-safe. Regenerate with: python scripts/save_demo.py",
+ "note": "Real model output saved by scripts/eval_cases.py --save",
  "facts": {
   "patient_name": "Rajesh Kumar Mehta",
   "gender": "male",
@@ -9,14 +9,15 @@
   "hospital_name": "Aashray Multispeciality Hospital",
   "sum_insured_inr": 500000,
   "first_inception_date": "2019-06-15",
+  "current_period": "2026-06-15 to 2027-06-14",
   "peds_declared": [],
   "admission_datetime": "2026-08-03T02:40",
   "discharge_datetime": "2026-08-08T12:15",
-  "diagnosis": "Heart attack (STEMI), angioplasty with stent",
+  "diagnosis": "Acute Inferior Wall ST-Elevation Myocardial Infarction (STEMI); Type 2 Diabetes Mellitus",
   "procedure": "Primary PTCA with drug-eluting stent to RCA",
   "amount_claimed_inr": 237000,
   "rejection_date": "2026-08-21",
-  "rejection_reason": "Non-disclosure of diabetes (no clause number given)",
+  "rejection_reason": "The insurer says the insured has had Type 2 Diabetes Mellitus since 2016 which was not disclosed in the proposal form, and treats this as non-disclosure of a material fact under the Disclosure of Information clause.",
   "rejection_category": "non_disclosure",
   "clause_cited": null,
   "waiting_period_months_in_letter": null,
@@ -25,10 +26,10 @@
   "fraud_alleged": false,
   "documents_found": [
    "policy wording",
-   "policy schedule",
+   "schedule",
    "rejection letter",
    "discharge summary",
-   "final bill"
+   "bill"
   ]
  },
  "investigation": {
@@ -41,31 +42,31 @@
     "rule_id": "R1",
     "title": "Moratorium period (60 months)",
     "status": "fail",
-    "finding": "Policy held 85 months. After 60 months, a claim can't be rejected for non-disclosure unless fraud is proven, and the letter alleges no fraud.",
+    "finding": "The policy has been held continuously for 85 months, and after 60 months the insurer cannot reject a claim for non-disclosure of diabetes unless it proves fraud, which the letter does not even allege.",
     "policy_quote": "After completion of sixty (60) continuous months of coverage (including portability and migration), no policy and claim shall be contestable by the Company on grounds of non-disclosure, misrepresentation, except on grounds of established fraud.",
-    "policy_clause": "Clause 6.4",
+    "policy_clause": "Clause 6.4 Moratorium Period",
     "page": 3,
     "regulation": "IRDAI (Insurance Products) Regulations, 2024",
     "severity": "critical"
    },
    {
-    "rule_id": "R6",
-    "title": "Specific clause cited",
+    "rule_id": "R5",
+    "title": "Claims Review Committee approval",
     "status": "fail",
-    "finding": "The letter names only a 'Disclosure of Information clause', with no clause number.",
-    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee). Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
-    "policy_clause": "Clause 5.4",
+    "finding": "The letter is 'system-generated' and does not say the three-member Claims Review Committee approved the rejection, which the policy requires for every repudiation.",
+    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee).",
+    "policy_clause": "Clause 5.4 Repudiation",
     "page": 3,
     "regulation": "IRDAI Master Circular on Health Insurance, 2024",
     "severity": "major"
    },
    {
-    "rule_id": "R5",
-    "title": "Claims Review Committee approval",
+    "rule_id": "R6",
+    "title": "Specific clause cited",
     "status": "fail",
-    "finding": "The letter does not say the 3-member Claims Review Committee approved the rejection.",
-    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee). Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
-    "policy_clause": "Clause 5.4",
+    "finding": "The letter only refers vaguely to the 'Disclosure of Information clause' and gives no clause number. That clause (6.1) is itself expressly 'subject to Clause 6.4 (Moratorium)'.",
+    "policy_quote": "Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
+    "policy_clause": "Clause 5.4 Repudiation",
     "page": 3,
     "regulation": "IRDAI Master Circular on Health Insurance, 2024",
     "severity": "major"
@@ -74,56 +75,79 @@
     "rule_id": "R7",
     "title": "Grievance & Ombudsman options shared",
     "status": "fail",
-    "finding": "The letter doesn't tell you how to complain or escalate.",
-    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee). Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
-    "policy_clause": "Clause 5.4",
+    "finding": "The letter does not mention the Grievance Officer, Bima Bharosa or the Insurance Ombudsman, even though the policy requires every repudiation letter to do so.",
+    "policy_quote": "Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
+    "policy_clause": "Clause 5.4 Repudiation",
     "page": 3,
     "regulation": "IRDAI Master Circular on Health Insurance, 2024",
     "severity": "minor"
    },
    {
-    "rule_id": "R9",
-    "title": "Sum insured & sub-limits",
-    "status": "pass",
-    "finding": "₹2,37,000 claimed is within the ₹5,00,000 sum insured.",
-    "policy_quote": null,
-    "policy_clause": null,
-    "page": null,
-    "regulation": null,
-    "severity": "minor"
+    "rule_id": "R2",
+    "title": "Pre-existing disease waiting (max 36 months)",
+    "status": "not_applicable",
+    "finding": "The insurer did not reject the claim under the PED waiting period. In any case, 85 months of cover is far beyond the 36-month PED waiting period.",
+    "policy_quote": "Expenses related to the treatment of a Pre-Existing Disease (PED) and its direct complications shall be excluded until the expiry of 36 months of Continuous Coverage after the date of inception of the first policy with the Company.",
+    "policy_clause": "Clause 3.1 Excl01",
+    "page": 2,
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
    },
    {
-    "rule_id": "R2",
-    "title": "Pre-existing disease waiting (36 months)",
+    "rule_id": "R3",
+    "title": "Specified disease waiting period",
     "status": "not_applicable",
-    "finding": "Treatment was for a heart attack, not for diabetes; the wait would be over anyway (85 > 36 months).",
+    "finding": "A heart attack treated with angioplasty is not on the 24-month specified-disease list, and 85 months of cover would exceed that waiting period anyway.",
     "policy_quote": null,
-    "policy_clause": null,
-    "page": null,
-    "regulation": null,
-    "severity": "minor"
+    "policy_clause": "Clause 3.2 Excl02",
+    "page": 2,
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
    },
    {
     "rule_id": "R4",
-    "title": "24-hour / Day Care rule",
+    "title": "24-hour rule vs Day Care procedures",
     "status": "not_applicable",
-    "finding": "5-day admission. Not relevant.",
+    "finding": "The patient stayed 5 days 10 hours (about 130 hours), well over 24 hours, and the claim was not rejected for a short stay.",
     "policy_quote": null,
     "policy_clause": null,
     "page": null,
-    "regulation": null,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024; consumer forum rulings",
+    "severity": "critical"
+   },
+   {
+    "rule_id": "R8",
+    "title": "Documents collected by insurer",
+    "status": "not_applicable",
+    "finding": "The claim was not rejected for missing documents; the discharge summary and the paid bill for Rs. 2,37,000 were submitted.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
+   },
+   {
+    "rule_id": "R9",
+    "title": "Sum insured & sub-limits",
+    "status": "not_applicable",
+    "finding": "No special sub-limit applies to cardiac treatment, and the Rs. 2,000 ambulance charge is within its limit, so the full Rs. 2,37,000 bill is within the Rs. 5,00,000 sum insured.",
+    "policy_quote": null,
+    "policy_clause": "Section 4 Sub-limits",
+    "page": 2,
+    "regulation": "Policy terms",
     "severity": "minor"
    }
   ],
   "next_steps": [
-   "Send the appeal letter to the insurer's Grievance Redressal Officer today.",
-   "If there is no satisfactory reply within 30 days, file a complaint on IRDAI's Bima Bharosa portal.",
-   "Then approach the Insurance Ombudsman: free, for claims up to ₹50 lakh, within one year of the insurer's final reply."
+   "Email the Grievance Redressal Officer (grievance@samvad-health.example) now. Cite Clause 6.4 (85 months of cover, no fraud alleged) and point out that Clause 6.1 is 'subject to Clause 6.4'. Demand full payment of Rs. 2,37,000 with interest under Clause 5.3.",
+   "In the same email, ask for proof of Claims Review Committee approval and the specific clause number relied on. Object in writing to any threat to cancel the policy, because the moratorium also protects the policy itself.",
+   "If there is no reply or you are unsatisfied by 09 Nov 2026, register a complaint on Bima Bharosa (bimabharosa.irdai.gov.in).",
+   "File a free complaint with the Insurance Ombudsman, Mumbai, via cioins.co.in within one year of the insurer's final reply (by 09 Nov 2027 at the latest). Attach the schedule showing continuous cover since 15-Jun-2019."
   ]
  },
  "letters": {
-  "en": "To,\nThe Grievance Redressal Officer,\nSamvad Health Insurance Co. Ltd.\n\nSubject: Request to review the repudiation of Claim No. CLM/2026/MUM/078812 under Policy No. SHS/26/1192034\n\nDear Sir / Madam,\n\nI refer to your letter dated 21-Aug-2026 rejecting my claim of ₹2,37,000 for treatment at Aashray Multispeciality Hospital, Andheri (West), Mumbai from 03-Aug-2026 to 08-Aug-2026. I request you to review this decision for the following reasons:\n\n1. My policy has been in force continuously since 15-Jun-2019, i.e. 85 months before my admission. Under Clause 6.4 (Moratorium) of the policy and the IRDAI (Insurance Products) Regulations, 2024, after 60 continuous months no claim can be contested on grounds of non-disclosure, except established fraud. Your letter does not allege any fraud.\n\n2. Your letter cites only a 'Disclosure of Information clause' without a clause number. Clause 5.4 requires every repudiation to state the specific clause.\n\n3. Your letter does not confirm approval by the Claims Review Committee, which Clause 5.4 and the IRDAI Master Circular on Health Insurance (2024) require for every repudiation.\n\n4. The treatment was for an acute heart attack (STEMI), not for diabetes.\n\nI therefore request you to settle the claim in full, with interest for delay as applicable under the policy and IRDAI regulations. If I do not receive a satisfactory reply within 30 days, I will approach IRDAI's Bima Bharosa portal and the Insurance Ombudsman.\n\nYours faithfully,\nRajesh Kumar Mehta\nPolicy No.: SHS/26/1192034\nClaim No.: CLM/2026/MUM/078812",
-  "hi": "सेवा में,\nशिकायत निवारण अधिकारी,\nSamvad Health Insurance Co. Ltd.\n\nविषय: पॉलिसी संख्या SHS/26/1192034 के अंतर्गत दावा संख्या CLM/2026/MUM/078812 की अस्वीकृति की समीक्षा हेतु अनुरोध\n\nमहोदय/महोदया,\n\nआपके दिनांक 21-Aug-2026 के पत्र के संदर्भ में, जिसमें Aashray Multispeciality Hospital, Andheri (West), Mumbai में 03-Aug-2026 से 08-Aug-2026 तक हुए उपचार के लिए मेरा ₹2,37,000 का दावा अस्वीकार किया गया है, मैं निम्नलिखित कारणों से इस निर्णय की समीक्षा का अनुरोध करता हूँ:\n\n1. मेरी पॉलिसी 15-06-2019 से लगातार प्रभावी है, यानी भर्ती की तारीख तक 85 महीने। पॉलिसी की धारा 6.4 (मोराटोरियम) और IRDAI (बीमा उत्पाद) विनियम, 2024 के अनुसार, लगातार 60 महीने पूरे होने के बाद, सिद्ध धोखाधड़ी के अलावा, जानकारी न देने के आधार पर किसी दावे पर आपत्ति नहीं की जा सकती। आपके पत्र में किसी धोखाधड़ी का आरोप नहीं है।\n\n2. आपके पत्र में केवल 'Disclosure of Information' धारा का उल्लेख है, कोई धारा संख्या नहीं दी गई है। धारा 5.4 के अनुसार हर अस्वीकृति पत्र में विशिष्ट धारा बताना अनिवार्य है।\n\n3. आपके पत्र में क्लेम रिव्यू कमेटी की स्वीकृति की पुष्टि नहीं है, जो धारा 5.4 और IRDAI स्वास्थ्य बीमा मास्टर सर्कुलर (2024) के अनुसार हर अस्वीकृति के लिए आवश्यक है।\n\n4. उपचार तीव्र हृदयाघात (STEMI) के लिए था, मधुमेह के लिए नहीं।\n\nअतः मेरा अनुरोध है कि पॉलिसी तथा IRDAI नियमों के अनुसार लागू विलंब ब्याज सहित मेरे दावे का पूर्ण भुगतान किया जाए। यदि 30 दिनों के भीतर मुझे संतोषजनक उत्तर नहीं मिलता है, तो मैं IRDAI के बीमा भरोसा पोर्टल तथा बीमा लोकपाल से संपर्क करूँगा।\n\nभवदीय,\nRajesh Kumar Mehta\nपॉलिसी संख्या: SHS/26/1192034\nदावा संख्या: CLM/2026/MUM/078812",
-  "mr": "प्रति,\nतक्रार निवारण अधिकारी,\nSamvad Health Insurance Co. Ltd.\n\nविषय: पॉलिसी क्रमांक SHS/26/1192034 अंतर्गत दावा क्रमांक CLM/2026/MUM/078812 नाकारल्याच्या निर्णयाचा पुनर्विचार करण्याबाबत विनंती\n\nमहोदय/महोदया,\n\nआपल्या दिनांक 21-Aug-2026 च्या पत्राच्या संदर्भात, ज्याद्वारे Aashray Multispeciality Hospital, Andheri (West), Mumbai येथे 03-Aug-2026 ते 08-Aug-2026 या कालावधीत झालेल्या उपचारांसाठीचा माझा ₹2,37,000 चा दावा नाकारण्यात आला आहे, खालील कारणांसाठी या निर्णयाचा पुनर्विचार करावा अशी मी विनंती करतो:\n\n1. माझी पॉलिसी 15-06-2019 पासून सलग सुरू आहे, म्हणजेच दाखल होण्याच्या तारखेपर्यंत 85 महिने. पॉलिसीच्या कलम 6.4 (मोरेटोरियम) आणि IRDAI (विमा उत्पादने) नियमावली, 2024 नुसार, सलग 60 महिने पूर्ण झाल्यानंतर, सिद्ध फसवणूक वगळता, माहिती न दिल्याच्या कारणावरून कोणत्याही दाव्यावर आक्षेप घेता येत नाही. आपल्या पत्रात फसवणुकीचा कोणताही आरोप नाही.\n\n2. आपल्या पत्रात फक्त 'Disclosure of Information' कलमाचा उल्लेख आहे, कलम क्रमांक दिलेला नाही. कलम 5.4 नुसार प्रत्येक नकार पत्रात विशिष्ट कलम नमूद करणे बंधनकारक आहे.\n\n3. आपल्या पत्रात क्लेम रिव्ह्यू कमिटीच्या मंजुरीची पुष्टी नाही, जी कलम 5.4 आणि IRDAI आरोग्य विमा मास्टर परिपत्रक (2024) नुसार प्रत्येक नकारासाठी आवश्यक आहे.\n\n4. उपचार तीव्र हृदयविकाराच्या झटक्यासाठी (STEMI) होते, मधुमेहासाठी नव्हे.\n\nम्हणून, पॉलिसी व IRDAI नियमांनुसार लागू विलंब व्याजासह माझा दावा पूर्णपणे मंजूर करावा, ही विनंती. 30 दिवसांत समाधानकारक उत्तर न मिळाल्यास मी IRDAI च्या बीमा भरोसा पोर्टलकडे व विमा लोकपालांकडे दाद मागेन.\n\nआपला विश्वासू,\nRajesh Kumar Mehta\nपॉलिसी क्रमांक: SHS/26/1192034\nदावा क्रमांक: CLM/2026/MUM/078812"
+  "en": "To,\nThe Grievance Redressal Officer,\nSamvad Health Insurance Co. Ltd.\n\nSubject: Request to review the repudiation of Claim No. CLM/2026/MUM/078812 under Policy No. SHS/26/1192034\n\nDear Sir / Madam,\n\nI refer to your letter dated 21 August 2026, by which you repudiated my claim of Rs. 237,000 for my hospitalisation at Aashray Multispeciality Hospital from 3 August 2026 to 8 August 2026. I was treated for Acute Inferior Wall ST-Elevation Myocardial Infarction (STEMI) and underwent Primary PTCA with a drug-eluting stent to the RCA. Your letter says that Type 2 Diabetes Mellitus was not disclosed in the proposal form and treats this as non-disclosure of a material fact under the Disclosure of Information clause. I request you to review this decision for the reasons below.\n\n1. The repudiation is barred by the Moratorium Period. I have held this policy continuously since 15 June 2019, which was 85 months of cover on the date of admission. Clause 6.4 (Moratorium Period) of the policy states: \"After completion of sixty (60) continuous months of coverage (including portability and migration), no policy and claim shall be contestable by the Company on grounds of non-disclosure, misrepresentation, except on grounds of established fraud.\" This is consistent with the IRDAI (Insurance Products) Regulations, 2024. My 60 continuous months were completed in June 2024, well before my admission on 3 August 2026. Your letter does not allege fraud, and none has been established. The only ground you have given is non-disclosure, which you can no longer raise against this claim.\n\n2. The Disclosure of Information clause cannot override the Moratorium. Your letter refers only to the \"Disclosure of Information clause\" and gives no clause number. That clause (Clause 6.1) is itself expressly subject to Clause 6.4 (Moratorium). It therefore cannot support a repudiation after 60 continuous months of cover. Clause 5.4 (Repudiation) and the IRDAI Master Circular on Health Insurance, 2024 require every repudiation letter to state the specific clause of the Policy under which the claim is declined. Your letter does not do so.\n\n3. There is no indication that the Claims Review Committee approved the repudiation. Clause 5.4 (Repudiation) provides: \"No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee).\" Your letter is system-generated and does not say that the three-member Committee reviewed and approved the rejection. This is contrary to the policy and to the IRDAI Master Circular on Health Insurance, 2024.\n\n4. The letter does not inform me of my grievance and Ombudsman options. Clause 5.4 (Repudiation) requires every repudiation letter to inform the Insured Person of the grievance redressal and Ombudsman options. Your letter does not mention the Grievance Officer, the Bima Bharosa portal or the Insurance Ombudsman, as the IRDAI Master Circular on Health Insurance, 2024 also requires.\n\nIn view of the above, I request you to set aside the repudiation and settle my claim in full for Rs. 237,000, together with interest for the delay as per the policy terms and IRDAI regulations. If I do not receive a satisfactory reply within 30 days, I will be compelled to approach the IRDAI's Bima Bharosa portal and the Insurance Ombudsman.\n\nYours faithfully,\nRajesh Kumar Mehta\nPolicy No.: SHS/26/1192034\nClaim No.: CLM/2026/MUM/078812",
+  "hi": "सेवा में,\nशिकायत निवारण अधिकारी,\nसंवाद हेल्थ इंश्योरेंस कंपनी लिमिटेड।\n\nविषय: पॉलिसी संख्या SHS/26/1192034 के अंतर्गत दावा संख्या CLM/2026/MUM/078812 के अस्वीकरण की समीक्षा हेतु अनुरोध\n\nमहोदय / महोदया,\n\nमैं आपके दिनांक 21 अगस्त 2026 के पत्र का संदर्भ ले रहा हूँ, जिसके द्वारा आपने आश्रय मल्टीस्पेशलिटी हॉस्पिटल में 3 अगस्त 2026 से 8 अगस्त 2026 तक मेरे अस्पताल में भर्ती रहने के लिए किए गए Rs. 237,000 के मेरे दावे को अस्वीकृत कर दिया है। मेरा उपचार तीव्र इन्फीरियर वॉल एसटी-एलिवेशन मायोकार्डियल इन्फार्क्शन (STEMI) के लिए किया गया था और मेरी RCA में ड्रग-एल्यूटिंग स्टेंट के साथ प्राइमरी PTCA की गई थी। आपके पत्र में कहा गया है कि प्रस्ताव प्रपत्र में टाइप 2 डायबिटीज मेलिटस का प्रकटीकरण नहीं किया गया था और इसे सूचना के प्रकटीकरण संबंधी खंड के अंतर्गत किसी महत्वपूर्ण तथ्य का अप्रकटीकरण माना गया है। मैं आपसे अनुरोध करता हूँ कि निम्नलिखित कारणों से इस निर्णय की समीक्षा करें।\n\n1. यह अस्वीकरण मोरेटोरियम अवधि द्वारा वर्जित है। मैं इस पॉलिसी को 15 जून 2019 से निरंतर धारण करता आ रहा हूँ, जो भर्ती की तिथि पर 85 माह का कवर था। पॉलिसी के खंड 6.4 (मोरेटोरियम अवधि) में कहा गया है: \"After completion of sixty (60) continuous months of coverage (including portability and migration), no policy and claim shall be contestable by the Company on grounds of non-disclosure, misrepresentation, except on grounds of established fraud.\" यह IRDAI (Insurance Products) Regulations, 2024 के अनुरूप है। मेरे 60 निरंतर माह जून 2024 में पूरे हो चुके थे, जो 3 अगस्त 2026 को मेरी भर्ती से काफी पहले की बात है। आपके पत्र में धोखाधड़ी का कोई आरोप नहीं लगाया गया है, और न ही कोई धोखाधड़ी सिद्ध हुई है। आपके द्वारा दिया गया एकमात्र आधार अप्रकटीकरण है, जिसे आप अब इस दावे के विरुद्ध नहीं उठा सकते।\n\n2. सूचना के प्रकटीकरण संबंधी खंड मोरेटोरियम को निरस्त नहीं कर सकता। आपके पत्र में केवल \"सूचना के प्रकटीकरण संबंधी खंड\" का उल्लेख है और कोई खंड संख्या नहीं दी गई है। वह खंड (खंड 6.1) स्वयं स्पष्ट रूप से खंड 6.4 (मोरेटोरियम) के अधीन है। इसलिए 60 निरंतर माह के कवर के बाद वह अस्वीकरण का आधार नहीं बन सकता। खंड 5.4 (अस्वीकरण) तथा IRDAI Master Circular on Health Insurance, 2024 के अनुसार प्रत्येक अस्वीकरण पत्र में पॉलिसी के उस विशिष्ट खंड का उल्लेख होना आवश्यक है जिसके अंतर्गत दावा अस्वीकृत किया गया है। आपके पत्र में ऐसा नहीं किया गया है।\n\n3. इस बात का कोई संकेत नहीं है कि क्लेम्स रिव्यू कमेटी ने अस्वीकरण को अनुमोदित किया था। खंड 5.4 (अस्वीकरण) में प्रावधान है: \"No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee).\" आपका पत्र सिस्टम-जनित है और इसमें यह नहीं कहा गया है कि तीन सदस्यीय समिति ने अस्वीकृति की समीक्षा कर उसे अनुमोदित किया। यह पॉलिसी के तथा IRDAI Master Circular on Health Insurance, 2024 के विपरीत है।\n\n4. पत्र में मुझे मेरे शिकायत निवारण तथा लोकपाल संबंधी विकल्पों की जानकारी नहीं दी गई है। खंड 5.4 (अस्वीकरण) के अनुसार प्रत्येक अस्वीकरण पत्र में बीमित व्यक्ति को शिकायत निवारण और लोकपाल संबंधी विकल्पों की जानकारी देना आवश्यक है। आपके पत्र में शिकायत अधिकारी, Bima Bharosa पोर्टल या बीमा लोकपाल का कोई उल्लेख नहीं है, जबकि IRDAI Master Circular on Health Insurance, 2024 में भी यह अपेक्षित है।\n\nउपर्युक्त को देखते हुए, मैं आपसे अनुरोध करता हूँ कि अस्वीकरण को निरस्त करें और मेरे दावे का Rs. 237,000 की पूरी राशि का निपटान करें, साथ ही पॉलिसी की शर्तों तथा IRDAI के विनियमों के अनुसार विलंब के लिए ब्याज का भी भुगतान करें। यदि मुझे 30 दिनों के भीतर संतोषजनक उत्तर प्राप्त नहीं होता है, तो मैं IRDAI के Bima Bharosa पोर्टल तथा बीमा लोकपाल के पास जाने के लिए बाध्य हो जाऊँगा।\n\nभवदीय,\nराजेश कुमार मेहता\nपॉलिसी संख्या: SHS/26/1192034\nदावा संख्या: CLM/2026/MUM/078812",
+  "mr": "प्रति,\nतक्रार निवारण अधिकारी,\nसंवाद हेल्थ इन्शुरन्स कं. लि.\n\nविषय: पॉलिसी क्र. SHS/26/1192034 अंतर्गत दावा क्र. CLM/2026/MUM/078812 नाकारण्याच्या निर्णयाचा पुनर्विचार करण्याची विनंती\n\nमहोदय / महोदया,\n\nमी आपल्या 21 August 2026 च्या पत्राचा संदर्भ देत आहे, ज्याद्वारे आपण आश्रय मल्टिस्पेशालिटी हॉस्पिटलमध्ये 3 August 2026 ते 8 August 2026 या कालावधीतील माझ्या रुग्णालयातील उपचारांसाठीचा Rs. 237,000 चा माझा दावा नाकारला आहे. माझ्यावर अक्यूट इन्फिरियर वॉल एसटी-एलिव्हेशन मायोकार्डियल इन्फार्क्शन (STEMI) साठी उपचार करण्यात आले आणि आरसीएमध्ये ड्रग-एल्युटिंग स्टेंटसह प्रायमरी पीटीसीए करण्यात आली. आपल्या पत्रात असे म्हटले आहे की प्रस्ताव अर्जात टाइप 2 डायबेटिस मेलिटसची माहिती दिली गेली नव्हती आणि हे माहितीच्या प्रकटीकरणाच्या कलमांतर्गत महत्त्वाची बाब न उघड केल्याचे मानले आहे. खालील कारणांसाठी आपण या निर्णयाचा पुनर्विचार करावा, अशी मी विनंती करतो.\n\n1. हा दावा नाकारणे मोरॅटोरियम कालावधीमुळे बाधित ठरते. मी ही पॉलिसी 15 June 2019 पासून सलग धारण केली आहे, म्हणजेच दाखल होण्याच्या तारखेला 85 महिन्यांचे संरक्षण पूर्ण झाले होते. पॉलिसीच्या कलम 6.4 (मोरॅटोरियम कालावधी) मध्ये असे नमूद आहे: \"साठ (60) सलग महिन्यांचे संरक्षण (पोर्टेबिलिटी आणि मायग्रेशनसह) पूर्ण झाल्यानंतर, सिद्ध झालेल्या फसवणुकीचा अपवाद वगळता, माहिती न दिल्याच्या किंवा चुकीची माहिती दिल्याच्या कारणावरून कंपनीला कोणत्याही पॉलिसीवर किंवा दाव्यावर आक्षेप घेता येणार नाही.\" हे IRDAI (Insurance Products) Regulations, 2024 शी सुसंगत आहे. माझे सलग 60 महिने June 2024 मध्ये पूर्ण झाले, म्हणजे 3 August 2026 रोजी मी दाखल होण्याच्या बऱ्याच आधी. आपल्या पत्रात फसवणुकीचा आरोप नाही आणि कोणतीही फसवणूक सिद्धही झालेली नाही. आपण दिलेले एकमेव कारण माहिती न दिल्याचे आहे, जे आता आपण या दाव्याविरुद्ध उपस्थित करू शकत नाही.\n\n2. माहितीच्या प्रकटीकरणाचे कलम मोरॅटोरियमवर वरचढ ठरू शकत नाही. आपल्या पत्रात केवळ \"माहितीच्या प्रकटीकरणाच्या कलमा\"चा उल्लेख आहे आणि कलम क्रमांक दिलेला नाही. ते कलम (कलम 6.1) स्वतःच स्पष्टपणे कलम 6.4 (मोरॅटोरियम) च्या अधीन आहे. त्यामुळे सलग 60 महिन्यांच्या संरक्षणानंतर दावा नाकारण्यासाठी ते आधार ठरू शकत नाही. कलम 5.4 (दावा नाकारणे) आणि IRDAI Master Circular on Health Insurance, 2024 नुसार प्रत्येक दावा नाकारणाऱ्या पत्रात पॉलिसीचे कोणते विशिष्ट कलम लागू करून दावा नाकारला जात आहे, हे नमूद करणे आवश्यक आहे. आपल्या पत्रात तसे केलेले नाही.\n\n3. दावा नाकारण्यास क्लेम्स रिव्ह्यू कमिटीने मंजुरी दिल्याचे कोणतेही संकेत नाहीत. कलम 5.4 (दावा नाकारणे) मध्ये असे नमूद आहे: \"कंपनीच्या क्लेम्स रिव्ह्यू कमिटीच्या (तीन सदस्यीय समिती) मंजुरीशिवाय कोणताही दावा पूर्णतः किंवा अंशतः नाकारला जाणार नाही.\" आपले पत्र प्रणालीद्वारे तयार केलेले आहे आणि तीन सदस्यीय समितीने हा नकार तपासून मंजूर केला असे त्यात म्हटलेले नाही. हे पॉलिसीच्या आणि IRDAI Master Circular on Health Insurance, 2024 च्या विरुद्ध आहे.\n\n4. पत्रात मला माझ्या तक्रार निवारण आणि लोकपालाच्या पर्यायांची माहिती दिलेली नाही. कलम 5.4 (दावा नाकारणे) नुसार प्रत्येक दावा नाकारणाऱ्या पत्रात विमाधारक व्यक्तीला तक्रार निवारण आणि लोकपालाच्या पर्यायांची माहिती देणे आवश्यक आहे. IRDAI Master Circular on Health Insurance, 2024 मध्येही हे आवश्यक आहे. आपल्या पत्रात तक्रार अधिकारी, Bima Bharosa पोर्टल किंवा विमा लोकपाल यांचा उल्लेख नाही.\n\nवरील बाबी लक्षात घेता, मी विनंती करतो की आपण दावा नाकारण्याचा निर्णय रद्द करावा आणि पॉलिसीच्या अटी व IRDAI च्या नियमांनुसार विलंबासाठीच्या व्याजासह माझा Rs. 237,000 चा दावा पूर्णपणे मंजूर करावा. 30 दिवसांच्या आत समाधानकारक उत्तर न मिळाल्यास, मला IRDAI च्या Bima Bharosa पोर्टलकडे आणि विमा लोकपालाकडे दाद मागणे भाग पडेल.\n\nआपला विश्वासू,\nराजेश कुमार मेहता\nपॉलिसी क्र.: SHS/26/1192034\nदावा क्र.: CLM/2026/MUM/078812"
  }
 }
