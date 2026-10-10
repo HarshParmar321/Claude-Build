@@ -74,8 +74,8 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .upload-h h2{margin:0;font-size:19px;letter-spacing:-.01em}
 .count{font-size:13.5px;color:var(--muted);font-weight:600}
 .count b{color:var(--accent)}
-.zones{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.zone{position:relative;border:1.5px dashed var(--line2);border-radius:var(--radius);padding:18px;background:#FCFCFA;cursor:pointer;transition:.2s;min-height:178px;display:flex;flex-direction:column;gap:4px}
+.zones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.zone{min-width:0;position:relative;border:1.5px dashed var(--line2);border-radius:var(--radius);padding:18px;background:#FCFCFA;cursor:pointer;transition:.2s;min-height:178px;display:flex;flex-direction:column;gap:4px}
 .zone:hover,.zone.drag{border-color:var(--accent);background:var(--accent-soft)}
 .zone.drag{transform:scale(1.015)}
 .zone.done{border-style:solid;border-color:#9CD3AC;background:var(--pass-soft)}
@@ -87,8 +87,8 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .zone .drop{margin-top:auto;padding-top:10px;font-size:13px;color:var(--accent);font-weight:600}
 .zone.done .drop{display:none}
 .files{display:flex;flex-direction:column;gap:5px;margin-top:auto;padding-top:10px}
-.file{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #CDE7D4;border-radius:9px;padding:6px 6px 6px 10px;font-size:12.5px;font-weight:600;color:#14532D}
-.file span{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file{min-width:0;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #CDE7D4;border-radius:9px;padding:6px 6px 6px 10px;font-size:12.5px;font-weight:600;color:#14532D}
+.file span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .file button{border:0;background:none;width:24px;height:24px;border-radius:6px;color:var(--muted);font-size:15px;line-height:1}
 .file button:hover{background:var(--fail-soft);color:var(--fail)}
 .cta{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
@@ -96,7 +96,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 
 /* Home: samples */
 .samples{margin:44px 0 0}
-.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.chips{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .chip{text-align:left;padding:16px;border-radius:var(--radius);border:1px solid var(--line);background:#fff;transition:.2s;display:flex;flex-direction:column;gap:2px;box-shadow:var(--shadow)}
 .chip:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 0 0 3px var(--accent-soft),var(--shadow)}
 .chip .e{font-size:24px;margin-bottom:6px}
@@ -131,7 +131,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .step.active{border-color:var(--accent);color:var(--ink);box-shadow:0 0 0 3px var(--accent-soft)}
 .step.done{color:var(--pass);border-color:#BFE3CA}
 .step.done .si{background:var(--pass);color:#fff}
-.grid2{display:grid;grid-template-columns:3fr 2fr;gap:18px;align-items:start}
+.grid2{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:18px;align-items:start}
 .panel-h{display:flex;justify-content:space-between;align-items:center;padding:15px 20px;border-bottom:1px solid var(--line)}
 .panel-h h3{margin:0;font-size:15px}
 .tally{display:flex;gap:6px}
@@ -179,7 +179,7 @@ header.top{display:flex;align-items:center;justify-content:space-between;padding
 .stake{text-align:right;padding-left:20px;border-left:1px solid var(--line)}
 .stake .amt{font-size:38px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
 .stake small{display:block;color:var(--muted);font-size:12.5px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:12px}
 .stats .card{padding:16px 18px}
 .stats .k{font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600}
 .stats .v{font-size:22px;font-weight:800;letter-spacing:-.01em;margin-top:2px}
