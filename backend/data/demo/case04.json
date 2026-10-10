@@ -1,0 +1,103 @@
+{
+ "note": "Saved replay used for ?demo=1 and as fail-safe. Regenerate with: python scripts/save_demo.py",
+ "facts": {
+  "patient_name": "Anita Rohan Desai",
+  "gender": "female",
+  "policy_number": "SHS/26/2901288",
+  "claim_number": "CLM/2026/MUM/094120",
+  "insurer_name": "Samvad Health Insurance Co. Ltd.",
+  "hospital_name": "Aashray Multispeciality Hospital",
+  "sum_insured_inr": 500000,
+  "first_inception_date": "2026-03-01",
+  "peds_declared": [],
+  "admission_datetime": "2026-09-18T07:00",
+  "discharge_datetime": "2026-09-22T13:00",
+  "diagnosis": "Osteoarthritis, right total knee replacement",
+  "procedure": "Right Total Knee Replacement",
+  "amount_claimed_inr": 302000,
+  "rejection_date": "2026-10-02",
+  "rejection_reason": "Joint replacement in 24-month waiting period (Excl02)",
+  "rejection_category": "specified_disease_waiting",
+  "clause_cited": "Clause 3.2 - Excl02",
+  "waiting_period_months_in_letter": 24,
+  "letter_mentions_claims_review_committee": true,
+  "letter_mentions_grievance_or_ombudsman": true,
+  "fraud_alleged": false,
+  "documents_found": [
+   "policy wording",
+   "policy schedule",
+   "rejection letter",
+   "discharge summary",
+   "final bill"
+  ]
+ },
+ "investigation": {
+  "verdict": "VALID_REJECTION",
+  "confidence": "high",
+  "headline": "This rejection appears correct",
+  "amount_at_stake_inr": 302000,
+  "checks": [
+   {
+    "rule_id": "R3",
+    "title": "Specified disease waiting (24 months)",
+    "status": "pass",
+    "finding": "Joint replacement has a 24-month wait. Policy is only 6 months old, so the insurer applied the rule correctly.",
+    "policy_quote": "Expenses related to the treatment of the listed conditions, surgeries or treatments shall be excluded until the expiry of 24 months of Continuous Coverage after the date of inception of the first policy. This exclusion shall not apply to claims arising due to an Accident.",
+    "policy_clause": "Excl02 (Clause 3.2)",
+    "page": 2,
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R5",
+    "title": "Claims Review Committee approval",
+    "status": "pass",
+    "finding": "Letter confirms committee approval on 01-Oct-2026.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R6",
+    "title": "Specific clause cited",
+    "status": "pass",
+    "finding": "Letter cites Clause 3.2, Excl02.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R7",
+    "title": "Grievance & Ombudsman options shared",
+    "status": "pass",
+    "finding": "Letter mentions the grievance officer and Ombudsman.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R3a",
+    "title": "Accident exception",
+    "status": "not_applicable",
+    "finding": "Osteoarthritis, no accident, so the exception doesn't apply.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   }
+  ],
+  "next_steps": [
+   "Keep renewing on time. The 24-month wait ends on 01-Mar-2028, after which joint replacement is covered.",
+   "Check whether an employer group policy or a spouse's family floater can pay for this surgery.",
+   "If you had earlier health cover with another insurer, ask about portability credit. It can shorten the waiting period."
+  ]
+ },
+ "letters": {}
+}

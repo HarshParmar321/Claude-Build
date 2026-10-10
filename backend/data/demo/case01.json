@@ -1,0 +1,129 @@
+{
+ "note": "Saved replay used for ?demo=1 and as fail-safe. Regenerate with: python scripts/save_demo.py",
+ "facts": {
+  "patient_name": "Rajesh Kumar Mehta",
+  "gender": "male",
+  "policy_number": "SHS/26/1192034",
+  "claim_number": "CLM/2026/MUM/078812",
+  "insurer_name": "Samvad Health Insurance Co. Ltd.",
+  "hospital_name": "Aashray Multispeciality Hospital",
+  "sum_insured_inr": 500000,
+  "first_inception_date": "2019-06-15",
+  "peds_declared": [],
+  "admission_datetime": "2026-08-03T02:40",
+  "discharge_datetime": "2026-08-08T12:15",
+  "diagnosis": "Heart attack (STEMI), angioplasty with stent",
+  "procedure": "Primary PTCA with drug-eluting stent to RCA",
+  "amount_claimed_inr": 237000,
+  "rejection_date": "2026-08-21",
+  "rejection_reason": "Non-disclosure of diabetes (no clause number given)",
+  "rejection_category": "non_disclosure",
+  "clause_cited": null,
+  "waiting_period_months_in_letter": null,
+  "letter_mentions_claims_review_committee": false,
+  "letter_mentions_grievance_or_ombudsman": false,
+  "fraud_alleged": false,
+  "documents_found": [
+   "policy wording",
+   "policy schedule",
+   "rejection letter",
+   "discharge summary",
+   "final bill"
+  ]
+ },
+ "investigation": {
+  "verdict": "STRONG_CASE",
+  "confidence": "high",
+  "headline": "This rejection breaks the 5-year moratorium rule",
+  "amount_at_stake_inr": 237000,
+  "checks": [
+   {
+    "rule_id": "R1",
+    "title": "Moratorium period (60 months)",
+    "status": "fail",
+    "finding": "Policy held 85 months. After 60 months, a claim can't be rejected for non-disclosure unless fraud is proven, and the letter alleges no fraud.",
+    "policy_quote": "After completion of sixty (60) continuous months of coverage (including portability and migration), no policy and claim shall be contestable by the Company on grounds of non-disclosure, misrepresentation, except on grounds of established fraud.",
+    "policy_clause": "Clause 6.4",
+    "page": 3,
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
+   },
+   {
+    "rule_id": "R6",
+    "title": "Specific clause cited",
+    "status": "fail",
+    "finding": "The letter names only a 'Disclosure of Information clause', with no clause number.",
+    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee). Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
+    "policy_clause": "Clause 5.4",
+    "page": 3,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
+   },
+   {
+    "rule_id": "R5",
+    "title": "Claims Review Committee approval",
+    "status": "fail",
+    "finding": "The letter does not say the 3-member Claims Review Committee approved the rejection.",
+    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee). Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
+    "policy_clause": "Clause 5.4",
+    "page": 3,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
+   },
+   {
+    "rule_id": "R7",
+    "title": "Grievance & Ombudsman options shared",
+    "status": "fail",
+    "finding": "The letter doesn't tell you how to complain or escalate.",
+    "policy_quote": "No claim shall be repudiated, fully or partly, without the approval of the Company's Claims Review Committee (a three-member committee). Every repudiation letter shall state the specific clause of the Policy under which the claim is declined, and inform the Insured Person of the grievance redressal and Ombudsman options.",
+    "policy_clause": "Clause 5.4",
+    "page": 3,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R9",
+    "title": "Sum insured & sub-limits",
+    "status": "pass",
+    "finding": "₹2,37,000 claimed is within the ₹5,00,000 sum insured.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R2",
+    "title": "Pre-existing disease waiting (36 months)",
+    "status": "not_applicable",
+    "finding": "Treatment was for a heart attack, not for diabetes; the wait would be over anyway (85 > 36 months).",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R4",
+    "title": "24-hour / Day Care rule",
+    "status": "not_applicable",
+    "finding": "5-day admission. Not relevant.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   }
+  ],
+  "next_steps": [
+   "Send the appeal letter to the insurer's Grievance Redressal Officer today.",
+   "If there is no satisfactory reply within 30 days, file a complaint on IRDAI's Bima Bharosa portal.",
+   "Then approach the Insurance Ombudsman: free, for claims up to ₹50 lakh, within one year of the insurer's final reply."
+  ]
+ },
+ "letters": {
+  "en": "To,\nThe Grievance Redressal Officer,\nSamvad Health Insurance Co. Ltd.\n\nSubject: Request to review the repudiation of Claim No. CLM/2026/MUM/078812 under Policy No. SHS/26/1192034\n\nDear Sir / Madam,\n\nI refer to your letter dated 21-Aug-2026 rejecting my claim of ₹2,37,000 for treatment at Aashray Multispeciality Hospital, Andheri (West), Mumbai from 03-Aug-2026 to 08-Aug-2026. I request you to review this decision for the following reasons:\n\n1. My policy has been in force continuously since 15-Jun-2019, i.e. 85 months before my admission. Under Clause 6.4 (Moratorium) of the policy and the IRDAI (Insurance Products) Regulations, 2024, after 60 continuous months no claim can be contested on grounds of non-disclosure, except established fraud. Your letter does not allege any fraud.\n\n2. Your letter cites only a 'Disclosure of Information clause' without a clause number. Clause 5.4 requires every repudiation to state the specific clause.\n\n3. Your letter does not confirm approval by the Claims Review Committee, which Clause 5.4 and the IRDAI Master Circular on Health Insurance (2024) require for every repudiation.\n\n4. The treatment was for an acute heart attack (STEMI), not for diabetes.\n\nI therefore request you to settle the claim in full, with interest for delay as applicable under the policy and IRDAI regulations. If I do not receive a satisfactory reply within 30 days, I will approach IRDAI's Bima Bharosa portal and the Insurance Ombudsman.\n\nYours faithfully,\nRajesh Kumar Mehta\nPolicy No.: SHS/26/1192034\nClaim No.: CLM/2026/MUM/078812",
+  "hi": "सेवा में,\nशिकायत निवारण अधिकारी,\nSamvad Health Insurance Co. Ltd.\n\nविषय: पॉलिसी संख्या SHS/26/1192034 के अंतर्गत दावा संख्या CLM/2026/MUM/078812 की अस्वीकृति की समीक्षा हेतु अनुरोध\n\nमहोदय/महोदया,\n\nआपके दिनांक 21-Aug-2026 के पत्र के संदर्भ में, जिसमें Aashray Multispeciality Hospital, Andheri (West), Mumbai में 03-Aug-2026 से 08-Aug-2026 तक हुए उपचार के लिए मेरा ₹2,37,000 का दावा अस्वीकार किया गया है, मैं निम्नलिखित कारणों से इस निर्णय की समीक्षा का अनुरोध करता हूँ:\n\n1. मेरी पॉलिसी 15-06-2019 से लगातार प्रभावी है, यानी भर्ती की तारीख तक 85 महीने। पॉलिसी की धारा 6.4 (मोराटोरियम) और IRDAI (बीमा उत्पाद) विनियम, 2024 के अनुसार, लगातार 60 महीने पूरे होने के बाद, सिद्ध धोखाधड़ी के अलावा, जानकारी न देने के आधार पर किसी दावे पर आपत्ति नहीं की जा सकती। आपके पत्र में किसी धोखाधड़ी का आरोप नहीं है।\n\n2. आपके पत्र में केवल 'Disclosure of Information' धारा का उल्लेख है, कोई धारा संख्या नहीं दी गई है। धारा 5.4 के अनुसार हर अस्वीकृति पत्र में विशिष्ट धारा बताना अनिवार्य है।\n\n3. आपके पत्र में क्लेम रिव्यू कमेटी की स्वीकृति की पुष्टि नहीं है, जो धारा 5.4 और IRDAI स्वास्थ्य बीमा मास्टर सर्कुलर (2024) के अनुसार हर अस्वीकृति के लिए आवश्यक है।\n\n4. उपचार तीव्र हृदयाघात (STEMI) के लिए था, मधुमेह के लिए नहीं।\n\nअतः मेरा अनुरोध है कि पॉलिसी तथा IRDAI नियमों के अनुसार लागू विलंब ब्याज सहित मेरे दावे का पूर्ण भुगतान किया जाए। यदि 30 दिनों के भीतर मुझे संतोषजनक उत्तर नहीं मिलता है, तो मैं IRDAI के बीमा भरोसा पोर्टल तथा बीमा लोकपाल से संपर्क करूँगा।\n\nभवदीय,\nRajesh Kumar Mehta\nपॉलिसी संख्या: SHS/26/1192034\nदावा संख्या: CLM/2026/MUM/078812",
+  "mr": "प्रति,\nतक्रार निवारण अधिकारी,\nSamvad Health Insurance Co. Ltd.\n\nविषय: पॉलिसी क्रमांक SHS/26/1192034 अंतर्गत दावा क्रमांक CLM/2026/MUM/078812 नाकारल्याच्या निर्णयाचा पुनर्विचार करण्याबाबत विनंती\n\nमहोदय/महोदया,\n\nआपल्या दिनांक 21-Aug-2026 च्या पत्राच्या संदर्भात, ज्याद्वारे Aashray Multispeciality Hospital, Andheri (West), Mumbai येथे 03-Aug-2026 ते 08-Aug-2026 या कालावधीत झालेल्या उपचारांसाठीचा माझा ₹2,37,000 चा दावा नाकारण्यात आला आहे, खालील कारणांसाठी या निर्णयाचा पुनर्विचार करावा अशी मी विनंती करतो:\n\n1. माझी पॉलिसी 15-06-2019 पासून सलग सुरू आहे, म्हणजेच दाखल होण्याच्या तारखेपर्यंत 85 महिने. पॉलिसीच्या कलम 6.4 (मोरेटोरियम) आणि IRDAI (विमा उत्पादने) नियमावली, 2024 नुसार, सलग 60 महिने पूर्ण झाल्यानंतर, सिद्ध फसवणूक वगळता, माहिती न दिल्याच्या कारणावरून कोणत्याही दाव्यावर आक्षेप घेता येत नाही. आपल्या पत्रात फसवणुकीचा कोणताही आरोप नाही.\n\n2. आपल्या पत्रात फक्त 'Disclosure of Information' कलमाचा उल्लेख आहे, कलम क्रमांक दिलेला नाही. कलम 5.4 नुसार प्रत्येक नकार पत्रात विशिष्ट कलम नमूद करणे बंधनकारक आहे.\n\n3. आपल्या पत्रात क्लेम रिव्ह्यू कमिटीच्या मंजुरीची पुष्टी नाही, जी कलम 5.4 आणि IRDAI आरोग्य विमा मास्टर परिपत्रक (2024) नुसार प्रत्येक नकारासाठी आवश्यक आहे.\n\n4. उपचार तीव्र हृदयविकाराच्या झटक्यासाठी (STEMI) होते, मधुमेहासाठी नव्हे.\n\nम्हणून, पॉलिसी व IRDAI नियमांनुसार लागू विलंब व्याजासह माझा दावा पूर्णपणे मंजूर करावा, ही विनंती. 30 दिवसांत समाधानकारक उत्तर न मिळाल्यास मी IRDAI च्या बीमा भरोसा पोर्टलकडे व विमा लोकपालांकडे दाद मागेन.\n\nआपला विश्वासू,\nRajesh Kumar Mehta\nपॉलिसी क्रमांक: SHS/26/1192034\nदावा क्रमांक: CLM/2026/MUM/078812"
+ }
+}

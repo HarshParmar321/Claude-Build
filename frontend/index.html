@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ClaimSathi</title>
+<style>
+:root{
+  --bg:#FAFAF7; --card:#FFFFFF; --ink:#1A1A1A; --muted:#5F6368; --line:#E4E4DE;
+  --accent:#3B3BD6; --accent-soft:#EDEDFC;
+  --fail:#D93025; --fail-soft:#FCEBEA; --pass:#188038; --pass-soft:#E6F4EA;
+  --warn:#B07800; --warn-soft:#FFF4D6; --na:#9AA0A6; --quote:#F3F3EE;
+  --radius:12px;
+  --font: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Devanagari", "Helvetica Neue", Arial, sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:15px;line-height:1.5}
+button{font:inherit;cursor:pointer}
+a{color:var(--accent)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.proto{background:#1A1A1A;color:#fff;font-size:12.5px;text-align:center;padding:6px 12px}
+header.top{display:flex;align-items:center;justify-content:space-between;padding:18px 0}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;cursor:pointer}
+.logo{width:34px;height:34px;border-radius:10px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800}
+.brand small{display:block;font-weight:500;font-size:12px;color:var(--muted)}
+.pill{font-size:12px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+.btn{border:0;border-radius:10px;padding:12px 18px;font-weight:600;background:var(--accent);color:#fff;display:inline-flex;align-items:center;gap:8px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.btn.small{padding:8px 12px;font-size:13.5px}
+.muted{color:var(--muted)}
+.screen{display:none;animation:fade .35s ease}
+.screen.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* Home */
+.hero{padding:36px 0 18px}
+.hero h1{font-size:40px;line-height:1.15;margin:0 0 12px;letter-spacing:-.02em;max-width:760px}
+.hero p{font-size:18px;color:var(--muted);margin:0;max-width:680px}
+.stat{display:inline-flex;gap:8px;align-items:center;margin-top:16px;background:var(--fail-soft);color:var(--fail);font-weight:600;padding:6px 12px;border-radius:999px;font-size:13.5px}
+.zones{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 16px}
+.zone{border:1.5px dashed #C9C9C0;border-radius:var(--radius);padding:22px 18px;background:#fff;cursor:pointer;transition:.2s;min-height:150px;display:flex;flex-direction:column;gap:6px}
+.zone:hover{border-color:var(--accent);background:var(--accent-soft)}
+.zone.done{border-style:solid;border-color:var(--pass);background:var(--pass-soft)}
+.zone .ic{font-size:24px}
+.zone b{font-size:15.5px}
+.zone .fname{font-size:12.5px;color:var(--pass);font-weight:600;word-break:break-all}
+.cta{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.samples{margin:34px 0 10px}
+.samples h3{margin:0 0 4px;font-size:15px}
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:12px}
+.chip{text-align:left;padding:14px 16px;border-radius:var(--radius);border:1px solid var(--line);background:#fff;transition:.2s}
+.chip:hover{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.chip .t{font-weight:650}
+.chip .a{font-size:20px;font-weight:700;margin:2px 0}
+.chip .s{font-size:12.5px;color:var(--muted)}
+.how{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:30px 0 40px}
+.how .card{padding:16px}
+.how b{display:block;margin-bottom:4px}
+
+/* Investigate */
+.stepper{display:flex;gap:8px;margin:18px 0 18px;flex-wrap:wrap}
+.step{flex:1;min-width:160px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:#fff;font-size:13.5px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.step.active{border-color:var(--accent);color:var(--ink);box-shadow:0 0 0 3px var(--accent-soft)}
+.step.done{color:var(--pass);border-color:#B7DFC2}
+.grid2{display:grid;grid-template-columns:3fr 2fr;gap:18px;align-items:start}
+.checks{padding:8px 0}
+.checks h3,.facts h3{margin:0;padding:14px 18px;font-size:15px;border-bottom:1px solid var(--line)}
+.row{display:flex;gap:12px;padding:12px 18px;border-bottom:1px solid var(--line);animation:slide .35s ease}
+.row:last-child{border-bottom:0}
+@keyframes slide{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+.icon{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;flex:none;font-weight:800;font-size:14px}
+.icon.fail{background:var(--fail-soft);color:var(--fail)}
+.icon.ok{background:var(--pass-soft);color:var(--pass)}
+.icon.na{background:#F1F3F4;color:var(--na)}
+.icon.spin{border:2.5px solid var(--accent-soft);border-top-color:var(--accent);animation:spin 1s linear infinite;background:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+.row .rt{font-weight:600}
+.row .rf{font-size:13.5px;color:var(--muted)}
+.tag{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:1px}
+.tag.fail{background:var(--fail-soft);color:var(--fail)}
+.tag.ok{background:var(--pass-soft);color:var(--pass)}
+.tag.na{background:#F1F3F4;color:var(--muted)}
+.facts dl{margin:0;padding:6px 18px 14px}
+.facts dt{font-size:12px;color:var(--muted);margin-top:10px}
+.facts dd{margin:0;font-weight:600;min-height:22px}
+.big{font-size:34px;font-weight:800;color:var(--accent);line-height:1.1}
+.ghostline{display:inline-block;height:12px;width:60%;border-radius:6px;background:linear-gradient(90deg,#eee,#f7f7f2,#eee);background-size:200% 100%;animation:shimmer 1.2s infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+
+/* Result */
+.verdict{padding:26px;display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:18px}
+.badge{display:inline-block;font-weight:800;letter-spacing:.04em;font-size:13px;padding:6px 12px;border-radius:8px}
+.badge.strong{background:var(--pass-soft);color:var(--pass)}
+.badge.contest{background:var(--warn-soft);color:var(--warn)}
+.badge.valid{background:#F1F3F4;color:#3C4043}
+.verdict h2{font-size:28px;margin:10px 0 4px;letter-spacing:-.01em;max-width:620px;line-height:1.2}
+.stake{text-align:right}
+.stake .amt{font-size:36px;font-weight:800}
+.section-t{font-size:15px;margin:26px 0 10px}
+.vcard{padding:18px;margin-bottom:12px;border-left:4px solid var(--fail)}
+.vcard.okc{border-left-color:var(--pass)}
+.vcard h4{margin:0 0 4px;font-size:16px}
+.quote{background:var(--quote);border-radius:8px;padding:12px 14px;margin:10px 0 8px;font-size:13.5px;font-style:italic}
+.cite{font-size:12.5px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.cite span{background:#fff;border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-style:normal}
+details.others{margin-top:6px}
+details.others summary{cursor:pointer;color:var(--muted);font-size:14px;padding:6px 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 8px}
+.timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:8px 0 6px;padding:18px}
+.tl{position:relative;padding-top:22px}
+.tl:before{content:"";position:absolute;top:7px;left:0;right:0;height:2px;background:var(--line)}
+.tl:after{content:"";position:absolute;top:2px;left:0;width:12px;height:12px;border-radius:50%;background:#fff;border:2px solid var(--accent)}
+.tl.first:after{background:var(--accent)}
+.tl b{display:block;font-size:13.5px}
+.tl small{color:var(--muted);font-size:12.5px;display:block;padding-right:10px}
+.letter{margin-top:16px;padding:0;overflow:hidden;display:none}
+.letter.on{display:block}
+.lhead{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:8px}
+.tabs{display:flex;gap:6px}
+.tab{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;font-weight:600;font-size:14px}
+.tab.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.lbody{white-space:pre-wrap;padding:20px 22px;font-size:14.5px;line-height:1.65;max-height:520px;overflow:auto}
+.lbody[lang=hi],.lbody[lang=mr]{font-size:15.5px;line-height:1.8}
+.next{padding:18px}
+.next li{margin:6px 0}
+.disclaimer{font-size:12.5px;color:var(--muted);text-align:center;margin:28px 0 40px}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#1A1A1A;color:#fff;padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;transition:.25s;pointer-events:none}
+.toast.on{opacity:1}
+
+@media (max-width:860px){
+  .zones,.how{grid-template-columns:1fr}
+  .chips{grid-template-columns:1fr 1fr}
+  .grid2{grid-template-columns:1fr}
+  .hero h1{font-size:30px}
+  .timeline{grid-template-columns:1fr 1fr;row-gap:16px}
+  .stake{text-align:left}
+}
+@media (max-width:420px){ .chips{grid-template-columns:1fr} .wrap{padding:0 16px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand" onclick="go('#/')"><div class="logo">स</div><div>ClaimSathi<small>Your claim's best friend</small></div></div>
+    <span class="pill" id="modePill">Connecting…</span>
+  </header>
+
+  <!-- SCREEN 1: HOME -->
+  <section id="home" class="screen">
+    <div class="hero">
+      <h1>Your claim was rejected. Let's check if that was fair.</h1>
+      <p>Upload your policy, the rejection letter and your hospital papers. ClaimSathi checks them against your policy and IRDAI rules in about a minute.</p>
+      <span class="stat">1 in 12 health claims in India is rejected</span>
+    </div>
+
+    <div class="zones">
+      <label class="zone" id="z1"><input type="file" accept="application/pdf" multiple hidden onchange="picked(1,this)"><span class="ic">📄</span><b>Policy</b><span class="muted">Policy wording + schedule</span><span class="fname"></span></label>
+      <label class="zone" id="z2"><input type="file" accept="application/pdf" hidden onchange="picked(2,this)"><span class="ic">✉️</span><b>Rejection letter</b><span class="muted">From your insurer or TPA</span><span class="fname"></span></label>
+      <label class="zone" id="z3"><input type="file" accept="application/pdf" multiple hidden onchange="picked(3,this)"><span class="ic">🏥</span><b>Hospital papers</b><span class="muted">Discharge summary + final bill</span><span class="fname"></span></label>
+    </div>
+    <div class="cta">
+      <button class="btn" id="goBtn" disabled onclick="startUpload()">Investigate my claim →</button>
+      <span class="muted" style="font-size:13px">PDFs only, up to 6 files. You can pick several files per box.</span>
+    </div>
+
+    <div class="samples">
+      <h3>No documents handy? Try a sample case</h3>
+      <span class="muted" style="font-size:13.5px">Fictional people and insurer, realistic rejections.</span>
+      <div class="chips" id="chips"></div>
+    </div>
+
+    <div class="how">
+      <div class="card"><b>1 · Reads everything</b><span class="muted">Policy, rejection letter, discharge summary and bill. No typing.</span></div>
+      <div class="card"><b>2 · Checks the rules</b><span class="muted">Every rejection is tested against your policy and 9 IRDAI rules.</span></div>
+      <div class="card"><b>3 · Fights for you</b><span class="muted">An appeal letter in English, हिंदी or मराठी, with deadlines.</span></div>
+    </div>
+  </section>
+
+  <!-- SCREEN 2: INVESTIGATE -->
+  <section id="investigate" class="screen">
+    <h2 style="margin:8px 0 0;font-size:24px" id="invTitle">Investigating your claim</h2>
+    <div class="stepper" id="stepper"></div>
+    <div id="notice" style="display:none;margin:-6px 0 14px;padding:10px 14px;border-radius:10px;background:var(--warn-soft);color:var(--warn);font-weight:600;font-size:14px"></div>
+    <div class="grid2">
+      <div class="card checks"><h3>IRDAI &amp; policy checks</h3><div id="checkList"></div></div>
+      <div class="card facts"><h3>Facts we found</h3><dl id="factList"></dl></div>
+    </div>
+    <div style="margin:18px 0 40px;display:flex;gap:10px">
+      <button class="btn" id="toResult" style="display:none" onclick="go('#/result/'+state.caseId)">See verdict →</button>
+    </div>
+  </section>
+
+  <!-- SCREEN 3: RESULT -->
+  <section id="result" class="screen">
+    <div class="card verdict" id="verdictCard"></div>
+    <div id="violations"></div>
+    <div id="actionArea"></div>
+    <div class="card letter" id="letter">
+      <div class="lhead">
+        <b id="letterTitle">Appeal letter to the Grievance Redressal Officer</b>
+        <div class="tabs">
+          <button class="tab on" data-l="en" onclick="setLang('en')">English</button>
+          <button class="tab" data-l="hi" onclick="setLang('hi')">हिंदी</button>
+          <button class="tab" data-l="mr" onclick="setLang('mr')">मराठी</button>
+        </div>
+      </div>
+      <div class="lbody" id="lbody" lang="en"></div>
+      <div class="lhead" style="border-top:1px solid var(--line);border-bottom:0">
+        <span class="muted" style="font-size:13px">Review before sending. Attach the rejection letter and hospital papers.</span>
+        <div style="display:flex;gap:8px"><button class="btn small ghost" onclick="copyLetter()">Copy</button><button class="btn small ghost" onclick="downloadLetter()">Download .txt</button></div>
+      </div>
+    </div>
+    <h3 class="section-t" id="nextTitle">What happens next</h3>
+    <div class="card timeline" id="timeline"></div>
+    <p class="disclaimer">ClaimSathi helps you understand and draft. It is not legal advice. Sample cases use fictional data.</p>
+  </section>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

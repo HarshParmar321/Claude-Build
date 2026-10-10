@@ -7,21 +7,49 @@ ClaimSathi reads an Indian health-insurance policy, the insurer's rejection lett
 > Opus 5.5 investigates · Sonnet 5.5 writes
 > Built for the Claude Opus 5.5 × Sonnet 5.5 Build Day, Mumbai.
 
-## Status
+## Run it (one command, one port)
 
-| Part | State |
+```bash
+cd backend
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env          # then paste your ANTHROPIC_API_KEY into .env
+uvicorn main:app --reload --port 8000
+```
+
+Open **http://localhost:8000**. FastAPI serves the API and the frontend.
+
+| Mode | How | What happens |
+| --- | --- | --- |
+| Live | API key in `backend/.env` | Sonnet 5.5 extracts → Python date math → Opus 5.5 investigates → Sonnet writes/translates letters |
+| Demo replay | open `http://localhost:8000/?demo=1`, or `FORCE_DEMO=1` in `.env` | Saved results with the same animation. No internet needed. |
+| Auto fail-safe | any API error/timeout | Shows a notice and plays the saved replay for that case |
+
+Check the setup: http://localhost:8000/api/health · API docs: http://localhost:8000/docs
+
+### Test against the answer key (live)
+
+```bash
+cd backend
+python scripts/eval_cases.py            # all 4 cases, prints PASS/FAIL per case
+python scripts/eval_cases.py case01     # one case
+python scripts/eval_cases.py --save     # also save real outputs as the demo replays
+```
+
+## Layout
+
+| Path | What |
 | --- | --- |
-| `prototype/index.html` | Clickable HTML prototype of all 3 screens with the 4 sample cases (no AI calls) |
-| `backend/` (FastAPI) | To build at the event: see the SRS |
-| `frontend/` (Next.js) | To build at the event: see the SRS |
-
-## Try the prototype
-
-Open `prototype/index.html` in any browser. No install, no internet needed.
-
-- Click a sample case (e.g. **Heart attack ₹2,37,000**) to watch the investigation.
-- On the verdict screen, click **Draft appeal letter**, then switch to **हिंदी** or **मराठी**.
-- Deep links: `#/investigate/case01`, `#/result/case04`.
+| `backend/main.py` | FastAPI routes: `POST /api/cases`, `GET /api/investigate/{id}` (SSE), `GET /api/cases/{id}`, `POST /api/letter`, `GET /api/health` |
+| `backend/pipeline.py` | Case store, AI stages A/C/D/E, live + replay event streams |
+| `backend/prompts.py` | System prompts |
+| `backend/schemas.py` | Pydantic models (Facts, Computed, Check, Investigation) |
+| `backend/dates.py` | Months of cover, stay length, deadlines (Python, not the model) |
+| `backend/claude_client.py` | Anthropic SDK wrapper: PDF blocks, JSON validation + 1 retry |
+| `backend/data/irdai_rules.json` | The 9 rules R1–R9 |
+| `backend/data/demo/` | Saved replays for case01–04 |
+| `frontend/` | `index.html` + `app.js` (served by FastAPI) |
+| `prototype/` | Original static prototype (no backend) |
 
 ## Sample data
 
@@ -37,9 +65,9 @@ Open `prototype/index.html` in any browser. No install, no internet needed.
 
 All names, organisations and numbers are fictional.
 
-## Planned stack
+## Stack
 
-Python 3.11 · FastAPI · Anthropic Python SDK (`claude-opus-5-5`, `claude-sonnet-5-5`) · Pydantic · sse-starlette · Next.js 15 · Tailwind · shadcn/ui
+Python 3.10+ · FastAPI · Anthropic Python SDK (`claude-opus-5-5`, `claude-sonnet-5-5`) · Pydantic · sse-starlette · plain HTML/CSS/JS frontend served by FastAPI
 
 ## Disclaimer
 

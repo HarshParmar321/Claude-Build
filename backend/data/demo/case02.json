@@ -1,0 +1,120 @@
+{
+ "note": "Saved replay used for ?demo=1 and as fail-safe. Regenerate with: python scripts/save_demo.py",
+ "facts": {
+  "patient_name": "Sunita Prakash Patil",
+  "gender": "female",
+  "policy_number": "SHS/26/2207719",
+  "claim_number": "CLM/2026/MUM/091406",
+  "insurer_name": "Samvad Health Insurance Co. Ltd.",
+  "hospital_name": "Aashray Multispeciality Hospital",
+  "sum_insured_inr": 300000,
+  "first_inception_date": "2023-01-01",
+  "peds_declared": [
+   "Hypertension"
+  ],
+  "admission_datetime": "2026-09-12T09:30",
+  "discharge_datetime": "2026-09-12T17:10",
+  "diagnosis": "Cataract, right eye — phacoemulsification + IOL",
+  "procedure": "Phacoemulsification with foldable IOL, right eye (Day Care)",
+  "amount_claimed_inr": 48500,
+  "rejection_date": "2026-09-26",
+  "rejection_reason": "Hospitalised less than 24 hours (Clause 1.5)",
+  "rejection_category": "less_than_24_hours",
+  "clause_cited": "Clause 1.5",
+  "waiting_period_months_in_letter": null,
+  "letter_mentions_claims_review_committee": true,
+  "letter_mentions_grievance_or_ombudsman": true,
+  "fraud_alleged": false,
+  "documents_found": [
+   "policy wording",
+   "policy schedule",
+   "rejection letter",
+   "discharge summary",
+   "final bill"
+  ]
+ },
+ "investigation": {
+  "verdict": "STRONG_CASE",
+  "confidence": "high",
+  "headline": "Cataract surgery is a Day Care procedure, so the 24-hour rule doesn't apply",
+  "amount_at_stake_inr": 48500,
+  "checks": [
+   {
+    "rule_id": "R4",
+    "title": "24-hour rule vs Day Care list",
+    "status": "fail",
+    "finding": "Stay was 7 h 40 min, but cataract surgery is Day Care procedure DC-01. Clause 1.5 itself says the 24-hour limit doesn't apply.",
+    "policy_quote": "Admission in a Hospital for a minimum period of 24 consecutive In-patient Care hours, except for specified Day Care procedures (Annexure I), where the time limit of 24 hours shall not apply.  ·  Annexure I: DC-01 · Ophthalmology · Cataract surgery — phacoemulsification with foldable IOL implantation",
+    "policy_clause": "Clause 1.5 + Annexure I",
+    "page": 1,
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "critical"
+   },
+   {
+    "rule_id": "R3",
+    "title": "Specified disease waiting (24 months)",
+    "status": "pass",
+    "finding": "Policy held 44 months, so the 24-month cataract waiting period is complete.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R9",
+    "title": "Cataract sub-limit",
+    "status": "pass",
+    "finding": "Limit = lower of 25% of ₹3,00,000 (₹75,000) or ₹60,000 per eye = ₹60,000. Bill ₹48,500 is fully payable.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R5",
+    "title": "Claims Review Committee approval",
+    "status": "pass",
+    "finding": "Not stated as a problem in this letter.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R6",
+    "title": "Specific clause cited",
+    "status": "pass",
+    "finding": "Letter cites Clause 1.5.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   },
+   {
+    "rule_id": "R7",
+    "title": "Grievance & Ombudsman options shared",
+    "status": "pass",
+    "finding": "Letter mentions the grievance officer and Ombudsman.",
+    "policy_quote": null,
+    "policy_clause": null,
+    "page": null,
+    "regulation": null,
+    "severity": "minor"
+   }
+  ],
+  "next_steps": [
+   "Send the appeal letter to the insurer's Grievance Redressal Officer today.",
+   "If there is no satisfactory reply within 30 days, file a complaint on IRDAI's Bima Bharosa portal.",
+   "Then approach the Insurance Ombudsman: free, for claims up to ₹50 lakh, within one year of the insurer's final reply."
+  ]
+ },
+ "letters": {
+  "en": "To,\nThe Grievance Redressal Officer,\nSamvad Health Insurance Co. Ltd.\n\nSubject: Request to review the repudiation of Claim No. CLM/2026/MUM/091406 under Policy No. SHS/26/2207719\n\nDear Sir / Madam,\n\nI refer to your letter dated 26-Sep-2026 rejecting my claim of ₹48,500 for treatment at Aashray Multispeciality Hospital, Andheri (West), Mumbai from 12-Sep-2026 to 12-Sep-2026. I request you to review this decision for the following reasons:\n\n1. I underwent cataract surgery (phacoemulsification with IOL implantation) on 12-Sep-2026. This is a Day Care procedure listed as DC-01 in Annexure I of the policy.\n\n2. Clause 1.5 itself states that the 24-hour limit does not apply to Day Care procedures, and Clause 2.2 covers Day Care Treatment even where hospitalisation is less than 24 hours.\n\n3. The 24-month waiting period for cataract (Excl02) is complete: my policy has been in force since 01-Jan-2023 (44 months). The bill of ₹48,500 is within the cataract limit of ₹60,000 per eye.\n\nI therefore request you to settle the claim in full, with interest for delay as applicable under the policy and IRDAI regulations. If I do not receive a satisfactory reply within 30 days, I will approach IRDAI's Bima Bharosa portal and the Insurance Ombudsman.\n\nYours faithfully,\nSunita Prakash Patil\nPolicy No.: SHS/26/2207719\nClaim No.: CLM/2026/MUM/091406",
+  "hi": "सेवा में,\nशिकायत निवारण अधिकारी,\nSamvad Health Insurance Co. Ltd.\n\nविषय: पॉलिसी संख्या SHS/26/2207719 के अंतर्गत दावा संख्या CLM/2026/MUM/091406 की अस्वीकृति की समीक्षा हेतु अनुरोध\n\nमहोदय/महोदया,\n\nआपके दिनांक 26-Sep-2026 के पत्र के संदर्भ में, जिसमें Aashray Multispeciality Hospital, Andheri (West), Mumbai में 12-Sep-2026 से 12-Sep-2026 तक हुए उपचार के लिए मेरा ₹48,500 का दावा अस्वीकार किया गया है, मैं निम्नलिखित कारणों से इस निर्णय की समीक्षा का अनुरोध करती हूँ:\n\n1. मैंने 12-09-2026 को मोतियाबिंद की सर्जरी (IOL प्रत्यारोपण के साथ फेकोइमल्सीफिकेशन) करवाई। यह पॉलिसी के अनुलग्नक I में DC-01 के रूप में सूचीबद्ध डे-केयर प्रक्रिया है।\n\n2. धारा 1.5 में स्वयं लिखा है कि 24 घंटे की सीमा डे-केयर प्रक्रियाओं पर लागू नहीं होती, और धारा 2.2 के अनुसार डे-केयर उपचार 24 घंटे से कम भर्ती होने पर भी कवर होता है।\n\n3. मोतियाबिंद के लिए 24 महीने की प्रतीक्षा अवधि (Excl02) पूरी हो चुकी है: मेरी पॉलिसी 01-01-2023 से प्रभावी है (44 महीने)। ₹48,500 का बिल प्रति आँख ₹60,000 की मोतियाबिंद सीमा के भीतर है।\n\nअतः मेरा अनुरोध है कि पॉलिसी तथा IRDAI नियमों के अनुसार लागू विलंब ब्याज सहित मेरे दावे का पूर्ण भुगतान किया जाए। यदि 30 दिनों के भीतर मुझे संतोषजनक उत्तर नहीं मिलता है, तो मैं IRDAI के बीमा भरोसा पोर्टल तथा बीमा लोकपाल से संपर्क करूँगी।\n\nभवदीया,\nSunita Prakash Patil\nपॉलिसी संख्या: SHS/26/2207719\nदावा संख्या: CLM/2026/MUM/091406",
+  "mr": "प्रति,\nतक्रार निवारण अधिकारी,\nSamvad Health Insurance Co. Ltd.\n\nविषय: पॉलिसी क्रमांक SHS/26/2207719 अंतर्गत दावा क्रमांक CLM/2026/MUM/091406 नाकारल्याच्या निर्णयाचा पुनर्विचार करण्याबाबत विनंती\n\nमहोदय/महोदया,\n\nआपल्या दिनांक 26-Sep-2026 च्या पत्राच्या संदर्भात, ज्याद्वारे Aashray Multispeciality Hospital, Andheri (West), Mumbai येथे 12-Sep-2026 ते 12-Sep-2026 या कालावधीत झालेल्या उपचारांसाठीचा माझा ₹48,500 चा दावा नाकारण्यात आला आहे, खालील कारणांसाठी या निर्णयाचा पुनर्विचार करावा अशी मी विनंती करते:\n\n1. मी 12-09-2026 रोजी मोतीबिंदूची शस्त्रक्रिया (IOL प्रत्यारोपणासह फेकोइमल्सिफिकेशन) केली. ही पॉलिसीच्या परिशिष्ट I मध्ये DC-01 म्हणून नमूद केलेली डे-केअर प्रक्रिया आहे.\n\n2. कलम 1.5 मध्येच स्पष्ट म्हटले आहे की 24 तासांची मर्यादा डे-केअर प्रक्रियांना लागू होत नाही, आणि कलम 2.2 नुसार 24 तासांपेक्षा कमी काळ दाखल असतानाही डे-केअर उपचार संरक्षित आहेत.\n\n3. मोतीबिंदूसाठीचा 24 महिन्यांचा प्रतीक्षा कालावधी (Excl02) पूर्ण झाला आहे: माझी पॉलिसी 01-01-2023 पासून सुरू आहे (44 महिने). ₹48,500 चे बिल प्रति डोळा ₹60,000 च्या मोतीबिंदू मर्यादेत आहे.\n\nम्हणून, पॉलिसी व IRDAI नियमांनुसार लागू विलंब व्याजासह माझा दावा पूर्णपणे मंजूर करावा, ही विनंती. 30 दिवसांत समाधानकारक उत्तर न मिळाल्यास मी IRDAI च्या बीमा भरोसा पोर्टलकडे व विमा लोकपालांकडे दाद मागेन.\n\nआपली विश्वासू,\nSunita Prakash Patil\nपॉलिसी क्रमांक: SHS/26/2207719\nदावा क्रमांक: CLM/2026/MUM/091406"
+ }
+}

@@ -1,0 +1,83 @@
+[
+  {
+    "id": "R1",
+    "title": "Moratorium period (60 months)",
+    "rule": "After 60 continuous months of coverage (including portability/migration), no policy or claim can be contested on grounds of non-disclosure or misrepresentation, except established fraud.",
+    "fails_when": "Rejection is for non-disclosure/misrepresentation AND computed months_of_cover >= 60 AND the letter does not allege and establish fraud.",
+    "policy_clause_hint": "Moratorium / Disclosure of Information clause (sample policy: Clause 6.4, Clause 6.1)",
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
+  },
+  {
+    "id": "R2",
+    "title": "Pre-existing disease waiting (max 36 months)",
+    "rule": "Waiting period for pre-existing diseases cannot exceed 36 months of continuous coverage.",
+    "fails_when": "Letter applies a PED waiting period longer than 36 months, or longer than the policy states, or rejects a declared PED after months_of_cover >= the policy's PED waiting period.",
+    "policy_clause_hint": "Excl01 / PED definition (sample policy: Clause 3.1, 1.7)",
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
+  },
+  {
+    "id": "R3",
+    "title": "Specified disease waiting period",
+    "rule": "Specified disease/procedure waiting period applies only until it is complete (max 36 months); it does not apply to accidents.",
+    "fails_when": "Letter applies a longer period than the policy states, or months_of_cover >= the policy's specified-disease waiting period, or the claim arose from an accident.",
+    "policy_clause_hint": "Excl02 (sample policy: Clause 3.2)",
+    "regulation": "IRDAI (Insurance Products) Regulations, 2024",
+    "severity": "critical"
+  },
+  {
+    "id": "R4",
+    "title": "24-hour rule vs Day Care procedures",
+    "rule": "The 24-hour minimum hospitalisation does not apply to Day Care procedures listed in the policy.",
+    "fails_when": "Rejected for hospitalisation under 24 hours AND the procedure appears in the policy's Day Care list.",
+    "policy_clause_hint": "Hospitalisation / Day Care definitions and Day Care annexure (sample policy: Clause 1.5, 2.2, Annexure I)",
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024; consumer forum rulings",
+    "severity": "critical"
+  },
+  {
+    "id": "R5",
+    "title": "Claims Review Committee approval",
+    "rule": "No claim may be repudiated fully or partly without approval of the insurer's Claims Review Committee.",
+    "fails_when": "The rejection letter does not state Claims Review Committee approval.",
+    "policy_clause_hint": "Repudiation clause (sample policy: Clause 5.4)",
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
+  },
+  {
+    "id": "R6",
+    "title": "Specific clause cited",
+    "rule": "Every repudiation must state the specific policy clause under which the claim is declined.",
+    "fails_when": "The letter names a clause only vaguely or gives no clause number.",
+    "policy_clause_hint": "Repudiation clause (sample policy: Clause 5.4)",
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
+  },
+  {
+    "id": "R7",
+    "title": "Grievance & Ombudsman options shared",
+    "rule": "The insurer must tell the insured about grievance redressal and Ombudsman options.",
+    "fails_when": "The letter does not mention the grievance officer, Bima Bharosa or the Ombudsman.",
+    "policy_clause_hint": "Repudiation / Grievance clause (sample policy: Clause 5.4, Section 7)",
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "minor"
+  },
+  {
+    "id": "R8",
+    "title": "Documents collected by insurer",
+    "rule": "The insurer/TPA must collect documents from the hospital; a claim cannot be rejected for documents the hospital holds.",
+    "fails_when": "Rejected for documents not submitted when those documents are available with the hospital.",
+    "policy_clause_hint": "Reimbursement / documents clause (sample policy: Clause 5.2)",
+    "regulation": "IRDAI Master Circular on Health Insurance, 2024",
+    "severity": "major"
+  },
+  {
+    "id": "R9",
+    "title": "Sum insured & sub-limits",
+    "rule": "Payable amount = minimum of bill, applicable sub-limit and sum insured.",
+    "fails_when": "Only used to compute amount_at_stake_inr; mark fail only if the insurer applied a sub-limit wrongly.",
+    "policy_clause_hint": "Sub-limits (sample policy: Section 4, Clause 2.5 cataract)",
+    "regulation": "Policy terms",
+    "severity": "minor"
+  }
+]
