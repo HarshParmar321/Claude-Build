@@ -18,7 +18,9 @@ def client() -> AsyncAnthropic:
     if not config.API_KEY:
         raise RuntimeError("ANTHROPIC_API_KEY is not set in backend/.env")
     if _client is None:
-        _client = AsyncAnthropic(api_key=config.API_KEY, timeout=config.TIMEOUT, max_retries=1)
+        headers = {"anthropic-workspace-id": config.WORKSPACE_ID} if config.WORKSPACE_ID else None
+        _client = AsyncAnthropic(api_key=config.API_KEY, timeout=config.TIMEOUT, max_retries=1,
+                                 default_headers=headers)
     return _client
 
 

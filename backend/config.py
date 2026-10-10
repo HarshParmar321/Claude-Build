@@ -8,6 +8,8 @@ BASE = Path(__file__).resolve().parent
 load_dotenv(BASE / ".env")
 
 API_KEY = os.getenv("ANTHROPIC_API_KEY", "").strip()
+# Only needed for keys not scoped to a workspace (sk-ant-usr-...).
+WORKSPACE_ID = os.getenv("ANTHROPIC_WORKSPACE_ID", "").strip()
 OPUS = os.getenv("OPUS_MODEL", "claude-opus-5-5")
 SONNET = os.getenv("SONNET_MODEL", "claude-sonnet-5-5")
 TIMEOUT = float(os.getenv("CLAUDE_TIMEOUT", "150"))
