@@ -1,74 +1,126 @@
-# ClaimSathi
+# ClaimSathi · क्लेम साथी
 
-**Your claim was rejected. Let's check if that was fair.**
+**Your health insurance claim was rejected. ClaimSathi tells you in about 30 seconds whether that was fair, and writes the letter to get your money back.**
 
-ClaimSathi reads an Indian health-insurance policy, the insurer's rejection letter and the hospital papers, checks the rejection against the policy and IRDAI rules, and drafts an appeal letter in English, Hindi or Marathi.
+> **Opus 5.5 investigates · Sonnet 5.5 fights for you**
+> Built at the Claude Opus 5.5 × Sonnet 5.5 Build Day, Mumbai · Track: **Everyday**
 
-> Opus 5.5 investigates · Sonnet 5.5 writes
-> Built for the Claude Opus 5.5 × Sonnet 5.5 Build Day, Mumbai.
+![Verdict screen](docs/screenshots/3-verdict.png)
 
-## Run it (one command, one port)
+## The problem
 
-```bash
-cd backend
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-cp .env.example .env          # then paste your ANTHROPIC_API_KEY into .env
-uvicorn main:app --reload --port 8000
-```
+- **1 in 12** health insurance claims in India is rejected (8% of 3.26 crore claims in FY25, about 26 lakh people).
+- **36%** of policyholders say their claim was fully rejected for invalid reasons (LocalCircles survey of 30,366 policyholders).
+- Health is **61%** of all insurance complaints but only about 11% of premiums. Ombudsman complaints have doubled in six years.
+- Most families never appeal. Checking a rejection means reading a 40-page policy against the rejection letter and knowing IRDAI rules such as the 5-year moratorium or the 36-month cap on waiting periods.
 
-Open **http://localhost:8000**. FastAPI serves the API and the frontend.
+Insurers have claims teams. Patients have nobody. ClaimSathi is that somebody.
 
-| Mode | How | What happens |
+## What it does
+
+1. **Upload 3 documents:** policy (wording + schedule), the rejection letter, hospital papers (discharge summary + bill). Or tap a sample case.
+2. **Investigates live:** Sonnet 5.5 reads the PDFs, Python does the date math exactly, and Opus 5.5 checks the rejection against the policy and **9 IRDAI rules**. Every finding quotes the exact clause and page.
+3. **Gives an honest verdict:** STRONG CASE · CONTESTABLE · VALID REJECTION. If the insurer is right, ClaimSathi says so.
+4. **Fights back:** a ready-to-send appeal letter in **English, हिंदी or मराठी**, a WhatsApp share button, and the escalation timeline (Grievance Officer → Bima Bharosa → Insurance Ombudsman).
+
+| Live investigation | Appeal letter in Hindi | Honest when the insurer is right |
 | --- | --- | --- |
-| Live | API key in `backend/.env` | Sonnet 5.5 extracts → Python date math → Opus 5.5 investigates → Sonnet writes/translates letters |
-| Demo replay | open `http://localhost:8000/?demo=1`, or `FORCE_DEMO=1` in `.env` | Saved results with the same animation. No internet needed. |
-| Auto fail-safe | any API error/timeout | Shows a notice and plays the saved replay for that case |
+| ![Investigation](docs/screenshots/2-investigation.png) | ![Hindi letter](docs/screenshots/4-letter-hindi.png) | ![Valid rejection](docs/screenshots/5-valid-rejection.png) |
 
-Check the setup: http://localhost:8000/api/health · API docs: http://localhost:8000/docs
+## Results on the test set: 4 / 4
 
-### Test against the answer key (live)
+Live run of `python scripts/eval_cases.py` against the expert answer key:
+
+| Case | Claim | Insurer's mistake | Expected | ClaimSathi | Time |
+| --- | --- | --- | --- | --- | --- |
+| 01 | Heart attack, ₹2,37,000 | "Non-disclosure" after 85 months of cover (moratorium rule) | STRONG CASE | ✅ STRONG CASE | 32 s |
+| 02 | Cataract, ₹48,500 | "Less than 24 hours" for a listed Day Care procedure | STRONG CASE | ✅ STRONG CASE | 30 s |
+| 03 | BP emergency, ₹1,31,000 | 48-month PED wait applied; policy says 36 | STRONG CASE | ✅ STRONG CASE | 37 s |
+| 04 | Knee replacement, ₹3,02,000 | None: 24-month wait genuinely not complete | VALID REJECTION | ✅ VALID REJECTION | 28 s |
+
+Claude also flagged two rejection letters that never mention Claims Review Committee approval, a procedural gap the hand-written answer key had missed.
+
+## How it works
+
+```mermaid
+flowchart LR
+  A[PDFs: policy, rejection letter, hospital papers] --> B[A. Extract facts<br/>Sonnet 5.5]
+  B --> C[B. Date math<br/>Python]
+  C --> D[C. Investigate<br/>Opus 5.5]
+  R[irdai_rules.json<br/>R1 to R9] --> D
+  D --> V[Verdict + cited checks<br/>streamed live]
+  V --> L[D. Appeal letter<br/>Sonnet 5.5]
+  L --> T[E. हिंदी / मराठी<br/>Sonnet 5.5]
+  X[(Saved replays)] -. on API failure .-> V
+```
+
+- **Numbers never come from the model.** Months of continuous cover, stay length and deadlines are computed in Python.
+- **Every model output is validated** with Pydantic and retried once if malformed.
+- **Live streaming** (Server-Sent Events) shows each check as it lands.
+- **Fail-safe:** any API error or timeout switches to a saved replay with a visible notice, so a demo never breaks.
+
+### The 9 IRDAI rules checked
+
+| ID | Rule |
+| --- | --- |
+| R1 | Moratorium: after 60 months of continuous cover, no rejection for non-disclosure except proven fraud |
+| R2 | Pre-existing disease waiting period capped at 36 months |
+| R3 | Specified disease waiting period (as per policy, max 36 months; not for accidents) |
+| R4 | 24-hour hospitalisation rule does not apply to listed Day Care procedures |
+| R5 | Every rejection needs Claims Review Committee approval |
+| R6 | Rejection must cite the specific policy clause |
+| R7 | Insurer must share grievance and Ombudsman options |
+| R8 | Insurer collects documents from the hospital |
+| R9 | Payable = min(bill, sub-limit, sum insured) |
+
+Sources: IRDAI (Insurance Products) Regulations 2024; IRDAI Master Circular on Health Insurance 2024; Insurance Ombudsman Rules 2017.
+
+## Run it
 
 ```bash
 cd backend
-python scripts/eval_cases.py            # all 4 cases, prints PASS/FAIL per case
-python scripts/eval_cases.py case01     # one case
-python scripts/eval_cases.py --save     # also save real outputs as the demo replays
+python3 -m venv ../.venv && source ../.venv/bin/activate
+python -m pip install -r requirements.txt
+cp .env.example .env      # add ANTHROPIC_API_KEY (and ANTHROPIC_WORKSPACE_ID for org-scoped keys)
+python -m uvicorn main:app --reload --port 8000
 ```
 
-## Layout
+Open **http://localhost:8000**. FastAPI serves both the API and the frontend.
+
+| Mode | How |
+| --- | --- |
+| Live | API key in `backend/.env` |
+| Demo replay (no internet) | `http://localhost:8000/?demo=1` or `FORCE_DEMO=1` |
+| Test against the answer key | `python scripts/eval_cases.py` (add `--save` to refresh the replays) |
+
+Health check: `/api/health` · API docs: `/docs`
+
+## Repository layout
 
 | Path | What |
 | --- | --- |
-| `backend/main.py` | FastAPI routes: `POST /api/cases`, `GET /api/investigate/{id}` (SSE), `GET /api/cases/{id}`, `POST /api/letter`, `GET /api/health` |
-| `backend/pipeline.py` | Case store, AI stages A/C/D/E, live + replay event streams |
-| `backend/prompts.py` | System prompts |
-| `backend/schemas.py` | Pydantic models (Facts, Computed, Check, Investigation) |
-| `backend/dates.py` | Months of cover, stay length, deadlines (Python, not the model) |
-| `backend/claude_client.py` | Anthropic SDK wrapper: PDF blocks, JSON validation + 1 retry |
-| `backend/data/irdai_rules.json` | The 9 rules R1–R9 |
-| `backend/data/demo/` | Saved replays for case01–04 |
-| `frontend/` | `index.html` + `app.js` (served by FastAPI) |
-| `prototype/` | Original static prototype (no backend) |
+| `backend/main.py` | FastAPI routes: cases, SSE investigation, result, letter, health |
+| `backend/pipeline.py` | AI stages, case store, live and replay streams |
+| `backend/prompts.py` | System prompts for each stage |
+| `backend/schemas.py` | Pydantic models |
+| `backend/dates.py` | Date math (months of cover, stay, deadlines) |
+| `backend/data/irdai_rules.json` | Rules R1 to R9 |
+| `backend/data/samples/` and `demo-pdfs/` | 4 fictional sample cases as PDFs |
+| `backend/data/demo/` | Saved real Claude outputs (replays) |
+| `frontend/` | Web app (HTML, CSS, JS) |
+| `docs/` | SRS, answer key, screenshots |
 
-## Sample data
+## Roadmap
 
-`backend/data/samples/case01..04/` holds fictional, watermarked PDFs (policy wording, schedule, rejection letter, discharge summary + bill).
-`backend/data/expected_verdicts.json` and `docs/ANSWER_KEY_ClaimSathi_Demo.pdf` list what the tool must find.
-
-| Case | Claim | Insurer's mistake | Expected |
-| --- | --- | --- | --- |
-| 01 | Heart attack, ₹2,37,000 | Non-disclosure after 85 months (moratorium) | STRONG CASE |
-| 02 | Cataract, ₹48,500 | 24-hour rule on a Day Care procedure | STRONG CASE |
-| 03 | BP emergency, ₹1,31,000 | 48-month PED wait; policy says 36 | STRONG CASE |
-| 04 | Knee replacement, ₹3,02,000 | None: 24-month wait not complete | VALID REJECTION |
-
-All names, organisations and numbers are fictional.
+- **Partial deductions:** check every bill line the insurer cut ("non-payable items", room-rent caps). Bigger market than full rejections.
+- **Before treatment:** "Will my surgery be covered?" checks against your own policy.
+- **At the hospital:** cashless denials and the 1-hour / 3-hour IRDAI deadlines.
+- **More languages**, Ombudsman complaint filing, and a B2B version for HR teams and brokers.
 
 ## Stack
 
-Python 3.10+ · FastAPI · Anthropic Python SDK (`claude-opus-5-5`, `claude-sonnet-5-5`) · Pydantic · sse-starlette · plain HTML/CSS/JS frontend served by FastAPI
+Python · FastAPI · Anthropic Python SDK (`claude-opus-5-5`, `claude-sonnet-5-5`) · Pydantic · sse-starlette · HTML/CSS/JS
 
 ## Disclaimer
 
-ClaimSathi helps you understand and draft. It is not legal advice.
+ClaimSathi helps you understand your rejection and draft an appeal. It is not legal advice. All sample people, insurers, hospitals and numbers are fictional.
