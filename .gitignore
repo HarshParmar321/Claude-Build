@@ -18,3 +18,6 @@ out/
 .DS_Store
 .vscode/
 .idea/
+
+# demo video recorder
+demo-video/raw/
