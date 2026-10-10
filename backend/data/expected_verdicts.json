@@ -1,0 +1,69 @@
+[
+  {
+    "case": "01",
+    "patient": "Mr. Rajesh Kumar Mehta",
+    "claim_number": "CLM/2026/MUM/078812",
+    "amount_claimed": 237000,
+    "expected_verdict": "STRONG CASE",
+    "rejection_letter_mentions_claims_review_committee": false,
+    "rejection_letter_mentions_ombudsman": false,
+    "expected_findings": [
+      "Policy first incepted 15-Jun-2019; date of admission 03-Aug-2026 = 85+ months of continuous coverage (>60 months).",
+      "Clause 6.4 / IRDAI Moratorium: after 60 months, a claim cannot be contested for non-disclosure unless established fraud. Letter alleges no fraud.",
+      "Clause 6.1 itself is expressly 'subject to Clause 6.4'.",
+      "Letter cites only a vague 'Disclosure of Information clause' — no specific clause number (Clause 5.4 requires a specific clause).",
+      "Letter does not state Claims Review Committee approval (Clause 5.4; IRDAI Master Circular 2024).",
+      "Letter does not mention grievance / Ombudsman options.",
+      "Bonus: the claim is for a heart attack, not diabetes treatment; diabetes is a risk factor, not the treated condition.",
+      "Recoverable: full admissible bill within ₹5,00,000 SI."
+    ]
+  },
+  {
+    "case": "02",
+    "patient": "Mrs. Sunita Prakash Patil",
+    "claim_number": "CLM/2026/MUM/091406",
+    "amount_claimed": 48500,
+    "expected_verdict": "STRONG CASE",
+    "rejection_letter_mentions_claims_review_committee": true,
+    "rejection_letter_mentions_ombudsman": true,
+    "expected_findings": [
+      "Cataract (phacoemulsification + IOL) is listed as Day Care procedure DC-01 in Annexure I.",
+      "Clause 1.5 itself says the 24-hour limit does not apply to Day Care procedures; Clause 2.2 covers Day Care even under 24 hours.",
+      "Excl02 24-month waiting for cataract: first inception 01-Jan-2023 → 44 months before surgery, waiting period completed.",
+      "Insurer quoted Clause 1.5 selectively, ignoring its own exception.",
+      "Sub-limit check: cataract limit = lower of 25% SI (₹75,000) or ₹60,000 per eye = ₹60,000. Bill ₹48,500 is within limit → fully payable."
+    ]
+  },
+  {
+    "case": "03",
+    "patient": "Mr. Vikram Shrikant Joshi",
+    "claim_number": "CLM/2026/MUM/093377",
+    "amount_claimed": 131000,
+    "expected_verdict": "STRONG CASE",
+    "rejection_letter_mentions_claims_review_committee": true,
+    "rejection_letter_mentions_ombudsman": false,
+    "expected_findings": [
+      "Excl01 in the policy wording states 36 months PED waiting, NOT 48 months as quoted in the letter.",
+      "IRDAI (Insurance Products) Regulations 2024 cap PED waiting at 36 months.",
+      "First inception 10-Nov-2022 → admission 20-Sep-2026 = 46 months (>36 months). PED waiting completed.",
+      "PED was declared and accepted, so no non-disclosure issue.",
+      "Letter does not mention Ombudsman option."
+    ]
+  },
+  {
+    "case": "04",
+    "patient": "Mrs. Anita Rohan Desai",
+    "claim_number": "CLM/2026/MUM/094120",
+    "amount_claimed": 302000,
+    "expected_verdict": "VALID REJECTION",
+    "rejection_letter_mentions_claims_review_committee": true,
+    "rejection_letter_mentions_ombudsman": true,
+    "expected_findings": [
+      "Joint replacement + osteoarthritis are listed under Excl02 with 24-month waiting.",
+      "First inception 01-Mar-2026, surgery 18-Sep-2026 = ~6.5 months. Waiting NOT completed.",
+      "No accident (Excl02 accident exception doesn't apply). No portability credit.",
+      "Letter cites specific clause, mentions Claims Review Committee approval and grievance/Ombudsman options.",
+      "Correct output: honest 'rejection appears valid' + advice (keep policy renewed; claim payable after 01-Mar-2028)."
+    ]
+  }
+]
